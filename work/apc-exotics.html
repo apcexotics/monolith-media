@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APC Exotics Case Study | Monolith Media Group</title>
+  <meta name="description" content="How Monolith built the website and live booking system for APC Exotics, an exotic-car rental brand." />
+  <meta name="theme-color" content="#e8dccc" />
+  <link rel="icon" type="image/png" href="/monogram.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #15140f; --paper: #f6f4ee; --paper2: #efece3;
+      --line: #ddd9cc; --muted: #76726a;
+      --accent: #c8553d; --accent-dk: #a8412c; --accent-soft: #e3a18f;
+      --maxw: 1120px;
+      --mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; }
+    body { background: #e8dccc; color: var(--ink); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--accent); color: var(--paper); }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(16px,4vw,40px); }
+
+    /* Header (same pill language as home) */
+    .site-header { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px clamp(16px,4vw,40px); background: rgba(232,220,204,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    .nav-back { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--ink); background: #e7e2d6; padding: 9px 17px; border-radius: 8px; transition: background .18s, transform .1s; }
+    .nav-back:hover { background: #ddd8ca; transform: translateY(-1px); }
+    .nav-brand { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(20px,2.6vw,27px); color: var(--ink); }
+    .pill-dark { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; background: var(--ink); color: var(--paper); padding: 9px 17px; border-radius: 8px; transition: background .18s, transform .1s; }
+    .pill-dark:hover { background: #2b2a24; transform: translateY(-1px); }
+
+    /* Simple load-in (CSS only, reduced-motion aware) */
+    .rise { animation: rise .9s cubic-bezier(.16,1,.3,1) both; }
+    .rise-2 { animation-delay: .12s; } .rise-3 { animation-delay: .22s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce){ .rise { animation: none; } }
+
+    /* Case hero */
+    .case-hero { padding: clamp(48px,9vh,110px) 0 clamp(28px,5vh,56px); }
+    .case-kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .case-h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(42px,8vw,96px); line-height: .98; letter-spacing: -.028em; margin-top: 16px; }
+    .case-h1 em { font-style: italic; color: var(--accent); }
+    .case-sub { font-size: clamp(16px,2vw,20px); color: var(--muted); max-width: 560px; margin-top: 20px; }
+    .case-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+    .tag { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--ink); padding: 8px 14px; border-radius: 999px; }
+
+    /* Placeholder slots: obviously scaffold, intentionally styled */
+    .slot { border: 1.5px dashed #c9bda9; border-radius: 16px; background: rgba(246,244,238,.5); display: flex; align-items: center; justify-content: center; color: var(--muted); font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; text-align: center; padding: 18px; }
+    .slot-hero { aspect-ratio: 16 / 9; }
+    .slot-tall { aspect-ratio: 4 / 5; }
+    .slot-wide { aspect-ratio: 16 / 10; }
+
+    .case-section { padding: clamp(36px,6vw,72px) 0; border-top: 1px solid var(--line); }
+    .case-grid { display: grid; grid-template-columns: 220px 1fr; gap: clamp(20px,4vw,56px); }
+    .case-label { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); padding-top: 4px; }
+    .case-body { max-width: 640px; color: var(--ink); font-size: clamp(16px,1.9vw,19px); line-height: 1.6; }
+    .case-body p + p { margin-top: 16px; }
+    .case-body .todo { color: var(--muted); font-style: italic; }
+
+    .deliv { margin-top: 6px; border-top: 1px solid var(--line); }
+    .deliv li { list-style: none; display: flex; gap: 14px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); font-weight: 600; }
+    .deliv li span { font-family: var(--mono); font-size: 12px; color: var(--accent); }
+
+    .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px,2vw,22px); }
+    .metric { border: 1px solid var(--line); background: var(--paper2); border-radius: 16px; padding: clamp(18px,2.4vw,28px); }
+    .metric b { display: block; font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(30px,4.4vw,52px); line-height: 1; letter-spacing: -.02em; color: var(--accent); }
+    .metric span { display: block; margin-top: 10px; font-size: 14px; color: var(--muted); }
+
+    .gallery { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(12px,2vw,22px); }
+
+    /* CTA band */
+    .case-cta { background: linear-gradient(118deg,#d2603a 0%,#c8553d 40%,#8a3422 100%); color: #f7f1e6; padding: clamp(48px,8vw,96px) 0; margin-top: clamp(36px,6vw,72px); }
+    .case-cta h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(28px,5vw,52px); line-height: 1.05; letter-spacing: -.02em; max-width: 700px; }
+    .btn-paper { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; padding: 16px 26px; background: var(--paper); color: var(--ink); margin-top: 28px; transition: background .18s, transform .1s; }
+    .btn-paper:hover { background: #fff; transform: translateY(-2px); }
+
+    .case-img { width: 100%; border-radius: 16px; display: block; }
+    .btn-live { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border: 1.5px solid var(--ink); padding: 12px 20px; border-radius: 999px; margin-top: 26px; transition: background .18s, color .18s, transform .1s; }
+    .btn-live:hover { background: var(--ink); color: var(--paper); transform: translateY(-1px); }
+
+    .site-footer { padding: 34px 0; }
+    .foot-copy { color: var(--muted); font-size: 13px; }
+
+    @media (max-width: 760px){
+      .case-grid { grid-template-columns: 1fr; gap: 14px; }
+      .metrics { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="/index.html#work" class="nav-back">&#8592; All work</a>
+    <a href="/index.html" class="nav-brand">Monolith</a>
+    <a href="/index.html#contact" class="pill-dark">Get in touch</a>
+  </header>
+
+  <section class="case-hero wrap">
+    <p class="case-kicker rise">01 / Client &middot; Case study</p>
+    <h1 class="case-h1 rise rise-2">APC <em>Exotics.</em></h1>
+    <p class="case-sub rise rise-3">The San Fernando Valley&rsquo;s only vetted exotic rental broker. Website, live booking, and search presence, all built by Monolith.</p>
+    <div class="case-tags rise rise-3">
+      <span class="tag">Website</span>
+      <span class="tag">Booking system</span>
+      <span class="tag">Local SEO</span>
+    </div>
+    <a class="btn-live rise rise-3" href="https://apcexotics.com" target="_blank" rel="noopener">Visit apcexotics.com &#8599;</a>
+  </section>
+
+  <div class="wrap rise rise-3">
+    <img class="case-img" src="apc-hero.jpg" alt="Exotic car from the APC Exotics fleet at sunset" width="1280" height="720" />
+  </div>
+
+  <section class="case-section">
+    <div class="wrap case-grid">
+      <p class="case-label">Overview</p>
+      <div class="case-body">
+        <p>APC Exotics rents Lamborghinis, McLarens, and Rolls-Royces to verified clients across Los Angeles, from Beverly Hills to Calabasas to Malibu, with white-glove delivery to your door, hotel, or set.</p>
+        <p>Monolith built the entire digital operation from zero: the brand, the website, the client-vetting and booking flow, and the local SEO that puts APC on page one when Los Angeles searches for an exotic rental.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="wrap case-grid">
+      <p class="case-label">What we built</p>
+      <div class="case-body">
+        <ul class="deliv">
+          <li><span>01</span>Full marketing website: fleet, rates, and cities served</li>
+          <li><span>02</span>Live booking with a five-minute client-vetting flow</li>
+          <li><span>03</span>Local SEO: page-one presence for exotic-rental searches</li>
+          <li><span>04</span>Google Business profile &amp; search content engine</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="wrap case-grid">
+      <p class="case-label">Results</p>
+      <div class="case-body" style="max-width:none">
+        <div class="metrics">
+          <div class="metric"><b>24</b><span>cars bookable online, from Urus to Cullinan</span></div>
+          <div class="metric"><b>2hr</b><span>average delivery time across 50 cities served</span></div>
+          <div class="metric"><b>Pg&nbsp;1</b><span>Google presence for exotic rental searches in LA</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section">
+    <div class="wrap case-grid">
+      <p class="case-label">Gallery</p>
+      <div class="case-body" style="max-width:none">
+        <div class="gallery">
+          <div class="slot slot-tall">Image slot: mobile booking flow</div>
+          <div class="slot slot-tall">Image slot: fleet page</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-cta">
+    <div class="wrap">
+      <h2>Want a site that books jobs while you sleep?</h2>
+      <a href="/index.html#contact" class="btn-paper">Start a project &#8594;</a>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap"><p class="foot-copy">&copy; 2026 Monolith Media Group. All rights reserved.</p></div>
+  </footer>
+
+</body>
+</html>

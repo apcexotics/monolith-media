@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monolith Media Group</title>
+  <meta name="description" content="Monolith builds growth infrastructure for local businesses: more inquiries, more booked appointments, and a brand that looks like the obvious premium choice online." />
+  <meta name="theme-color" content="#e8dccc" />
+  <link rel="icon" type="image/png" href="monogram.png" />
+  <link rel="preload" as="image" href="hero-monolith.webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Tokens ───────────────────────────────────────────────────── */
+    :root {
+      --ink: #15140f; --paper: #f6f4ee; --paper2: #efece3;
+      --line: #ddd9cc; --muted: #76726a;
+      --accent: #c8553d; --accent-dk: #a8412c;
+      --accent-soft: #e3a18f; --accent-bright: #e3471f;
+      --cream: #ece5d2; --maxw: 1120px;
+      --mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    /* ── Reset ────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { background: #e8dccc; color: var(--ink); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; }
+    input, textarea, select { font-family: inherit; }
+    ::selection { background: var(--accent); color: var(--paper); }
+
+    /* ── Keyframes ────────────────────────────────────────────────── */
+    @keyframes mlDrift { 0%,100%{background-position:0% 0%} 50%{background-position:100% 100%} }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+    }
+
+    /* ── Layout ───────────────────────────────────────────────────── */
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(16px,4vw,40px); }
+
+    /* ── Header (centered logo + pill nav, Dirt-style) ───────────── */
+    .site-header {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; gap: 16px;
+      padding: 15px clamp(16px,4vw,40px);
+      background: transparent; border-bottom: 1px solid transparent;
+      transition: background .3s, border-color .3s, backdrop-filter .3s;
+    }
+    .site-header.scrolled { background: rgba(236,231,223,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    .nav-group { display: flex; align-items: center; gap: 8px; flex: 1 1 0; }
+    .nav-group.right { justify-content: flex-end; }
+    .nav-brand { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(20px,2.6vw,27px); letter-spacing: .01em; color: var(--ink); white-space: nowrap; flex: 0 0 auto; }
+    .pill { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--ink); background: #e7e2d6; padding: 9px 17px; border-radius: 8px; transition: background .18s, color .18s, transform .1s; }
+    .pill:hover { background: #ddd8ca; transform: translateY(-1px); }
+    .pill-dark { background: var(--ink); color: var(--paper); }
+    .pill-dark:hover { background: #2b2a24; }
+    @media (max-width: 680px){ .nav-group.left { display: none; } .nav-group.right .pill:not(.pill-dark) { display: none; } }
+
+    /* ── Hero ─────────────────────────────────────────────────────── */
+    .hero-scroll { position: relative; background: #e8dccc; }
+    .hero-sticky { position: relative; min-height: clamp(620px,94vh,1040px); overflow: hidden; display: flex; align-items: center; background: #e8dccc; }
+    .hero-art-wrap {
+      position: absolute; right: 0; top: 0; bottom: 0; z-index: 0; height: 100%; width: min(78%,1280px);
+      overflow: hidden; pointer-events: none;
+      background: #e8dccc url('hero-monolith.webp') center center / cover no-repeat;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
+      mask-composite: intersect;
+    }
+    .hero-art { width: 100%; height: 100%; display: block; }
+    .hero-content { position: relative; z-index: 2; width: 100%; max-width: var(--maxw); margin: 0 auto; padding: clamp(40px,8vh,96px) clamp(16px,4vw,48px); }
+    .hero-left { max-width: 600px; }
+
+    .hero-h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(46px,8.4vw,104px); line-height: .96; letter-spacing: -.028em; color: var(--ink); margin-top: 22px; }
+    .hero-h1 em { font-style: italic; color: var(--accent); }
+
+    .hero-sub { font-size: clamp(16px,2vw,20px); color: var(--muted); max-width: 440px; margin-top: 24px; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+
+    @media (max-width: 900px){
+      /* Overlay like desktop: the monolith hangs off the right edge and rotates
+         *underneath* the headline (text on top). Pushed further right + a wider
+         left feather so the copy always sits on calm cream, not on the object. */
+      .hero-sticky { min-height: 88vh; display: flex; align-items: center; }
+      .hero-art-wrap { position: absolute; left: 26%; right: -42%; top: 0; bottom: 0; width: auto; height: 100%; aspect-ratio: auto; margin-top: 0;
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 48%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
+        -webkit-mask-composite: source-in;
+        mask-image: linear-gradient(to right, transparent 0%, #000 48%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
+        mask-composite: intersect; }
+      .hero-art { display: block; }
+      .hero-content { padding-top: clamp(64px,14vh,120px); padding-bottom: 40px; }
+      /* Ghost button reads poorly over the object: give it a frosted cream fill
+         (still bordered, still turns solid ink on press) */
+      .hero-ctas .btn-ghost-light { background: rgba(232,220,204,.72); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+      .hero-ctas .btn-ghost-light:hover { background: var(--ink); }
+    }
+
+    .btn { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; padding: 16px 26px; transition: background .18s ease, color .18s ease, border-color .18s ease, transform .1s ease; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn-accent { background: var(--accent); color: #f6f4ee; }
+    .btn-accent:hover { background: var(--accent-dk); }
+    .btn-ghost-light { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
+    .btn-ghost-light:hover { background: var(--ink); color: #f6f4ee; }
+
+    /* ── Statement band ───────────────────────────────────────────── */
+    .statement {
+      position: relative; overflow: hidden;
+      background: linear-gradient(118deg,#d2603a 0%,#c8553d 28%,#8a3422 60%,#15140f 100%);
+      background-size: 200% 200%; animation: mlDrift 22s ease-in-out infinite;
+    }
+    .statement-wm {
+      position: absolute; right: -2%; bottom: -26%;
+      font-family: 'Fraunces', serif; font-weight: 600;
+      font-size: clamp(280px,52vw,520px); line-height: 1;
+      color: rgba(255,255,255,.07); pointer-events: none; user-select: none; z-index: 1;
+    }
+    .statement-inner { position: relative; z-index: 2; padding: clamp(60px,11vw,120px) clamp(16px,4vw,40px); max-width: var(--maxw); margin: 0 auto; }
+    .statement-h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(30px,6vw,58px); line-height: 1.04; letter-spacing: -.02em; color: #f7f1e6; max-width: 760px; margin-top: 18px; }
+    .btn-paper { background: var(--paper); color: var(--ink); margin-top: 30px; }
+    .btn-paper:hover { background: #fff; }
+
+    /* ── Contact ──────────────────────────────────────────────────── */
+    .form-wrap { background: var(--paper2); border: 1px solid var(--line); padding: clamp(22px,3vw,34px); max-width: 680px; margin-top: clamp(26px,4vw,44px); }
+    .form-label { display: block; font-weight: 600; font-size: 12px; margin: 18px 0 7px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink); }
+    .form-label:first-of-type { margin-top: 0; }
+    .req { color: var(--accent); }
+    .opt { color: var(--muted); text-transform: none; font-weight: 400; letter-spacing: 0; }
+    .form-input { width: 100%; background: var(--paper); border: 1px solid var(--line); color: var(--ink); font-size: 16px; padding: 13px; transition: outline .15s, border-color .15s; }
+    .form-input:focus { outline: 2px solid var(--accent); border-color: var(--accent); outline-offset: 0; }
+    .btn-submit { width: 100%; justify-content: center; margin-top: 24px; }
+    .form-note { font-size: 13px; color: var(--muted); margin-top: 14px; }
+    .thanks { display: none; background: var(--paper); border-left: 4px solid var(--accent); padding: 22px; }
+    .thanks.visible { display: block; }
+
+    /* ── Footer ───────────────────────────────────────────────────── */
+    .site-footer { background: var(--ink); color: var(--paper); border-top: 1px solid #2b2a24; padding: clamp(44px,6vw,68px) 0; }
+    .foot-grid { display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-start; }
+    .foot-brand p { color: #b8b4a8; font-size: 15px; max-width: 320px; }
+    .foot-nav { display: flex; flex-direction: column; gap: 10px; }
+    .foot-nav a { color: var(--paper); font-weight: 600; transition: color .18s; }
+    .foot-nav a:hover { color: var(--accent-soft); }
+    .foot-copy { color: #75726a; font-size: 13px; margin-top: 32px; }
+
+    /* ── Reveals ──────────────────────────────────────────────────── */
+    [data-reveal] { transition: opacity 1s cubic-bezier(.16,1,.3,1), transform 1.15s cubic-bezier(.16,1,.3,1); }
+    [data-reveal]:not(.revealed) { opacity: 0; will-change: opacity, transform; }
+    [data-reveal="up"]:not(.revealed)    { transform: translateY(34px); }
+    [data-reveal="left"]:not(.revealed)  { transform: translateX(-30px); }
+    [data-reveal="scale"]:not(.revealed) { transform: scale(.92); }
+    [data-reveal].revealed { opacity: 1; transform: none; }
+
+    /* ════════ ELEVATED SYSTEM ════════ */
+    .section-pad { padding: clamp(64px,10vw,128px) 0; }
+    .sec-h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(28px,5vw,52px); line-height: 1.04; letter-spacing: -.02em; margin-top: 16px; max-width: 780px; }
+
+    /* Services: scroll-synced list (Dirt-style dim/brighten) */
+    .svc2-list { margin-top: clamp(30px,4vw,56px); border-top: 1px solid var(--line); }
+    .svc2-item { display: grid; grid-template-columns: 56px 1fr; gap: clamp(14px,3vw,40px); padding: clamp(22px,3.4vw,42px) 0; border-bottom: 1px solid var(--line); opacity: .28; transition: opacity .45s ease; }
+    .svc2-item.active { opacity: 1; }
+    .svc2-no { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent); padding-top: 10px; }
+    .svc2-h { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(28px,5vw,56px); line-height: 1.02; letter-spacing: -.022em; }
+    .svc2-p { font-size: 16px; color: var(--muted); max-width: 540px; margin-top: 12px; line-height: 1.5; }
+    @media (prefers-reduced-motion: reduce){ .svc2-item { opacity: 1; } }
+
+    /* Selected work: filmstrip */
+    .work-head { display: flex; flex-direction: column; }
+    .work-note { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 14px; }
+    .film { display: flex; gap: clamp(14px,1.6vw,22px); overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; padding: clamp(26px,3.4vw,44px) clamp(16px,4vw,48px) 8px; scrollbar-width: none; cursor: grab; }
+    .film::-webkit-scrollbar { display: none; }
+    .film.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+    .film.dragging .tile { pointer-events: none; }
+    .tile { flex: 0 0 clamp(320px,72vw,680px); scroll-snap-align: start; opacity: .4; transform: scale(.95); transition: opacity .5s ease, transform .5s ease; }
+    .tile.tile-active { opacity: 1; transform: scale(1); }
+    .tile-media { position: relative; aspect-ratio: 4 / 3; min-height: 280px; border-radius: 16px; overflow: hidden; display: flex; align-items: flex-end; padding: clamp(20px,2.2vw,28px); transition: transform .4s cubic-bezier(.16,1,.3,1); }
+    .tile:hover .tile-media { transform: translateY(-6px); }
+    .tile-ink   { background: var(--ink); color: var(--paper); }
+    .tile-terra { background: linear-gradient(155deg,#d2603a 0%,#a8412c 70%); color: #fff; }
+    .tile-cream { background: var(--cream); color: var(--ink); border: 1px solid var(--line); }
+    .tile-paper { background: var(--paper2); color: var(--ink); border: 1px solid var(--line); }
+    .tile-corner { position: absolute; top: clamp(17px,2vw,23px); right: clamp(18px,2vw,24px); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; opacity: .62; }
+    @media (max-width: 900px){
+      .film { padding-left: 7vw; padding-right: 7vw; }
+      .tile { flex: 0 0 86vw; scroll-snap-align: center; }
+      /* no hover on touch: the centered (active) tile shows its CTA */
+      .tile.tile-active .tile-cta { opacity: .9; transform: none; }
+    }
+    .tile-name { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(26px,3vw,38px); line-height: 1.02; letter-spacing: -.02em; }
+    .tile-desc { font-size: 14px; line-height: 1.45; margin-top: 10px; opacity: .82; max-width: 32ch; }
+    .tile-metric { display: inline-block; margin-top: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; opacity: .72; }
+    .tile-link { display: block; }
+    .tile-cta { display: block; margin-top: 12px; font-size: 14px; font-weight: 600; opacity: 0; transform: translateY(4px); transition: opacity .3s ease, transform .3s ease; }
+    .tile:hover .tile-cta { opacity: .9; transform: none; }
+
+    /* Pricing strip */
+    .pricing { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .pricing-row { display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: center; justify-content: space-between; padding: clamp(30px,4vw,52px) 0; }
+    .price-line { font-family: 'Fraunces', Georgia, serif; font-size: clamp(22px,3.4vw,34px); line-height: 1.15; letter-spacing: -.01em; margin-top: 12px; }
+    .price-line em { font-style: normal; color: var(--accent); }
+
+    /* Contact: two column */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px,4vw,64px); align-items: start; }
+    .contact-blurb { color: var(--muted); font-size: 16px; line-height: 1.6; margin-top: 20px; max-width: 420px; }
+    .contact-grid .form-wrap { margin-top: 0; }
+    @media (max-width: 820px){ .contact-grid { grid-template-columns: 1fr; } }
+
+    /* Footer wordmark */
+    .foot-word { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(58px,17vw,230px); line-height: .82; letter-spacing: -.035em; color: #fff; opacity: .06; margin: clamp(26px,4vw,46px) 0 0; pointer-events: none; user-select: none; }
+
+    /* Lenis smooth scroll */
+    html.lenis, html.lenis body { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto !important; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: clip; }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────────────── -->
+  <header class="site-header" id="siteHeader">
+    <div class="nav-group left">
+      <a href="#services" class="pill">Services</a>
+      <a href="#work" class="pill">Work</a>
+    </div>
+    <a href="#" class="nav-brand" aria-label="Monolith Media, home">Monolith</a>
+    <div class="nav-group right">
+      <a href="#contact" class="pill pill-dark">Get in touch</a>
+    </div>
+  </header>
+
+  <!-- ── HERO ───────────────────────────────────────────────────── -->
+  <section class="hero-scroll" id="heroScroll">
+    <div class="hero-sticky">
+      <div class="hero-art-wrap">
+        <canvas class="hero-art" id="heroCanvas" aria-hidden="true"></canvas>
+      </div>
+      <div class="hero-content">
+        <div class="hero-left">
+        <h1 class="hero-h1" data-reveal="up" data-reveal-delay="0">
+          The online side,<br><em>handled.</em>
+        </h1>
+        <p class="hero-sub" data-reveal="up" data-reveal-delay="200">
+          We get local businesses found, booked, and looking like the obvious choice: the entire growth engine, run by one studio.
+        </p>
+        <div class="hero-ctas" data-reveal="up" data-reveal-delay="300">
+          <a href="#contact" class="btn btn-accent">Start a project &#8594;</a>
+          <a href="#work" class="btn btn-ghost-light">See our work</a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ───────────────────────────────────────────────── -->
+  <section class="section-pad" id="services">
+    <div class="wrap">
+      <h2 class="sec-h2" data-reveal="up">One studio for everything your business does online.</h2>
+      <div class="svc2-list" id="svcList">
+        <article class="svc2-item"><span class="svc2-no">01</span><div><h3 class="svc2-h">Get more booked jobs</h3><p class="svc2-p">Fast, mobile-first sites and booking flows that turn visitors into paying customers.</p></div></article>
+        <article class="svc2-item"><span class="svc2-no">02</span><div><h3 class="svc2-h">Get found on Google</h3><p class="svc2-p">Local SEO and search presence sorted, so the right people find you first.</p></div></article>
+        <article class="svc2-item"><span class="svc2-no">03</span><div><h3 class="svc2-h">Be the obvious choice</h3><p class="svc2-p">Reviews, content, and brand that make you the one they trust and call first.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SELECTED WORK (filmstrip) ──────────────────────────────── -->
+  <section class="section-pad" id="work">
+    <div class="wrap work-head">
+      <h2 class="sec-h2" data-reveal="up">A few builds worth showing.</h2>
+      <p class="work-note" data-reveal="up" data-reveal-delay="80">Real projects, real results &#8594; drag to scroll</p>
+    </div>
+    <div class="film" id="filmEl" data-lenis-prevent data-reveal="up" data-reveal-delay="160">
+      <article class="tile">
+        <a class="tile-link" href="work/apc-exotics.html">
+        <div class="tile-media tile-ink">
+          <span class="tile-corner">01 / Client</span>
+          <div>
+            <h3 class="tile-name">APC Exotics</h3>
+            <p class="tile-desc">Full website and live booking for an exotic-car rental brand.</p>
+            <span class="tile-metric">Website · Booking system</span>
+            <span class="tile-cta">View case study &#8594;</span>
+          </div>
+        </div>
+        </a>
+      </article>
+      <article class="tile">
+        <a class="tile-link" href="work/vizibl-management.html">
+        <div class="tile-media tile-terra">
+          <span class="tile-corner">02 / Client</span>
+          <div>
+            <h3 class="tile-name">Vizibl Management</h3>
+            <p class="tile-desc">Brand site and lead capture for a talent &amp; management company.</p>
+            <span class="tile-metric">Website · Lead capture</span>
+            <span class="tile-cta">View case study &#8594;</span>
+          </div>
+        </div>
+        </a>
+      </article>
+      <article class="tile">
+        <div class="tile-media tile-cream">
+          <span class="tile-corner">03 / Capability</span>
+          <div>
+            <h3 class="tile-name">Found on Google</h3>
+            <p class="tile-desc">Local SEO, Google Business Profile, and the search presence that gets you called first.</p>
+            <span class="tile-metric">Local SEO · Maps</span>
+          </div>
+        </div>
+      </article>
+      <article class="tile">
+        <div class="tile-media tile-paper">
+          <span class="tile-corner">04 / Capability</span>
+          <div>
+            <h3 class="tile-name">Content &amp; social</h3>
+            <p class="tile-desc">A steady stream of on-brand content and posts that keep you top of mind.</p>
+            <span class="tile-metric">Content · Social</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── WHY MONOLITH ───────────────────────────────────────────── -->
+  <section class="statement">
+    <span class="statement-wm" aria-hidden="true">M</span>
+    <div class="statement-inner">
+      <h2 class="statement-h2" data-reveal="up">One team for everything your business does online: found, booked, and impossible to ignore.</h2>
+      <a href="#contact" class="btn btn-paper" data-reveal="up" data-reveal-delay="200">Start with a free audit &#8594;</a>
+    </div>
+  </section>
+
+  <!-- ── PRICING ────────────────────────────────────────────────── -->
+  <section class="pricing">
+    <div class="wrap pricing-row">
+      <div data-reveal="up">
+        <p class="price-line">Websites from <em>$500</em>. Monthly plans from <em>$79</em>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ────────────────────────────────────────────────── -->
+  <section class="section-pad" id="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-left">
+        <h2 class="sec-h2" data-reveal="up">Tell us about your project.</h2>
+        <p class="contact-blurb" data-reveal="up" data-reveal-delay="140">No pitch. We&rsquo;ll take a quick look at your setup and tell you exactly what we&rsquo;d fix. Calls and texts welcome too; we usually reply within a day.</p>
+      </div>
+      <div class="contact-right" data-reveal="up" data-reveal-delay="160">
+        <div class="form-wrap">
+        <form id="inquiryForm">
+          <label class="form-label" for="f-name">Name <span class="req">*</span></label>
+          <input class="form-input" type="text" name="name" id="f-name" autocomplete="name" maxlength="120" required />
+          <label class="form-label" for="f-business">Business name</label>
+          <input class="form-input" type="text" name="business" id="f-business" autocomplete="organization" maxlength="160" />
+          <label class="form-label" for="f-email">Email <span class="req">*</span></label>
+          <input class="form-input" type="email" name="email" id="f-email" autocomplete="email" maxlength="200" required />
+          <label class="form-label" for="f-phone">Phone <span class="req">*</span></label>
+          <input class="form-input" type="tel" name="phone" id="f-phone" autocomplete="tel" maxlength="40" required />
+          <label class="form-label" for="f-help">What do you need help with?</label>
+          <input class="form-input" type="text" name="help_with" id="f-help" maxlength="300" placeholder="New site? Google? Social? A full refresh?" />
+          <label class="form-label" for="f-website">Your website <span class="opt">(optional)</span></label>
+          <input class="form-input" type="text" name="website" id="f-website" autocomplete="url" maxlength="200" placeholder="yoursite.com" />
+          <!-- honeypot: invisible to humans, bots fill it and get silently dropped -->
+          <input type="text" name="company_url" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
+          <button type="submit" class="btn btn-accent btn-submit" id="submitBtn">Send my inquiry</button>
+          <p class="form-note">Calls and texts welcome too. We usually reply within a day.</p>
+        </form>
+        <div class="thanks" id="thanks">
+          <b style="font-family:'Fraunces',serif;font-size:20px;font-weight:600;">Got it.</b>
+          <p style="margin-top:8px;color:var(--muted);">We&rsquo;ll take a quick look at your setup and get back to you within a day. The Monolith team.</p>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <p>One team for everything your business does online. Call or text and we'll reply within a day.</p>
+        </div>
+        <nav class="foot-nav">
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#contact">Get in touch</a>
+        </nav>
+      </div>
+      <div class="foot-word" aria-hidden="true">Monolith</div>
+      <p class="foot-copy">&copy; 2026 Monolith Media Group. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" integrity="sha384-eD5ubmuCcvTdCADWuSchJYE7wcj2nzNr0itbrh6w/KJyBiltSZ8w3VFRBSWu5YQ8" crossorigin="anonymous"></script>
+  <script>
+    /* Light mode only. Dark toggle removed. */
+
+    /* ── FORM ────────────────────────────────────────────────────── */
+    var SHEET_URL = 'https://script.google.com/macros/s/AKfycbxM-Q0VitsQdKzKYo4A4VHeiKT7Xwj4R2WzJMa2CxHQHCnyKbWA0nz47Zi28UFwcAXA/exec';
+
+    document.getElementById('inquiryForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var form = this;
+      var btn  = document.getElementById('submitBtn');
+
+      /* Honeypot: humans never see company_url; if it's filled, a bot did it. */
+      if (form.company_url && form.company_url.value) {
+        form.style.display = 'none';
+        document.getElementById('thanks').classList.add('visible');
+        return;
+      }
+
+      btn.disabled    = true;
+      btn.textContent = 'Sending…';
+
+      var data = {
+        name:     form.name.value.trim(),
+        business: form.business.value.trim(),
+        email:    form.email.value.trim(),
+        phone:    form.phone.value.trim(),
+        help_with: form.help_with.value.trim(),
+        website:  form.website.value.trim()
+      };
+
+      fetch(SHEET_URL, {
+        method: 'POST',
+        body:   JSON.stringify(data)
+      })
+      .then(function () {
+        form.style.display = 'none';
+        document.getElementById('thanks').classList.add('visible');
+      })
+      .catch(function () {
+        form.style.display = 'none';
+        document.getElementById('thanks').classList.add('visible');
+      });
+    });
+
+    /* ── SCROLL REVEALS ──────────────────────────────────────────── */
+    var pending = Array.from(document.querySelectorAll('[data-reveal]'));
+
+    function reveal (el) {
+      var delay = parseFloat(el.getAttribute('data-reveal-delay')) || 0;
+      if (delay) {
+        setTimeout(function () { el.classList.add('revealed'); }, delay);
+      } else {
+        el.classList.add('revealed');
+      }
+    }
+
+    function checkReveals () {
+      var vh = window.innerHeight;
+      pending = pending.filter(function (el) {
+        if (el.getBoundingClientRect().top < vh * 0.9) { reveal(el); return false; }
+        return true;
+      });
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+      pending.forEach(function (el) { io.observe(el); });
+    } else {
+      /* Fallback only for browsers without IntersectionObserver */
+      var rafId;
+      window.addEventListener('scroll', function () {
+        if (rafId) return;
+        rafId = requestAnimationFrame(function () { rafId = null; checkReveals(); });
+      }, { passive: true });
+      window.addEventListener('resize', checkReveals, { passive: true });
+      setTimeout(checkReveals, 60);
+    }
+
+    /* ── WORK FILMSTRIP: mouse drag-to-scroll ─────────────────────── */
+    var filmEl = document.getElementById('filmEl');
+    if (filmEl) {
+      var dragState = null;
+      var dragMoved = false;
+      filmEl.addEventListener('pointerdown', function (e) {
+        if (e.pointerType === 'touch') return;
+        dragState = { pointerId: e.pointerId, startX: e.clientX, scrollLeft: filmEl.scrollLeft };
+        dragMoved = false;
+        /* NOTE: pointer capture is deliberately NOT taken here. Capturing on every
+           mousedown (even a plain click) redirects the resulting click's target to
+           filmEl in Chromium, so a tile-link's default navigation never fires. We
+           only capture once real movement proves it's an actual drag (below). */
+      });
+      filmEl.addEventListener('pointermove', function (e) {
+        if (!dragState) return;
+        var dx = e.clientX - dragState.startX;
+        if (!dragMoved) {
+          if (Math.abs(dx) <= 6) return;   /* under threshold: leave plain clicks alone */
+          dragMoved = true;
+          filmEl.classList.add('dragging');
+          try { filmEl.setPointerCapture(dragState.pointerId); } catch (err) {}
+        }
+        filmEl.scrollLeft = dragState.scrollLeft - dx;
+      });
+      /* a drag must never fire the tile's link */
+      filmEl.addEventListener('click', function (e) {
+        if (dragMoved) { e.preventDefault(); e.stopPropagation(); dragMoved = false; }
+      }, true);
+      function endFilmDrag (e) {
+        if (!dragState) return;
+        dragState = null;
+        filmEl.classList.remove('dragging');
+        try { filmEl.releasePointerCapture(e.pointerId); } catch (err) {}
+      }
+      filmEl.addEventListener('pointerup', endFilmDrag);
+      filmEl.addEventListener('pointerleave', endFilmDrag);
+      filmEl.addEventListener('pointercancel', endFilmDrag);
+    }
+
+    /* ── WORK FILMSTRIP: focus effect on scroll ──────────────────── */
+    var filmTiles = filmEl ? Array.prototype.slice.call(filmEl.querySelectorAll('.tile')) : [];
+    if (filmEl && filmTiles.length && 'IntersectionObserver' in window) {
+      var tileIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          entry.target.classList.toggle('tile-active', entry.intersectionRatio > 0.55);
+        });
+      }, { root: filmEl, threshold: [0, 0.25, 0.55, 0.8, 1] });
+      filmTiles.forEach(function (t) { tileIO.observe(t); });
+    } else {
+      filmTiles.forEach(function (t) { t.classList.add('tile-active'); });
+    }
+
+    /* ── Motion: Lenis smooth scroll + hero parallax + nav + services ── */
+    var heroCanvas = document.getElementById('heroCanvas');
+    var siteHeader = document.getElementById('siteHeader');
+    var svcItems   = Array.prototype.slice.call(document.querySelectorAll('.svc2-item'));
+    var reduced    = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ── Hero: scroll-scrubbed canvas frame sequence ───────────────────
+       Frame index is driven by how far the hero has scrolled out of view,
+       so the monolith rotates *with* the scroll (page never freezes).
+       Desktop loads frames/ (1600px), mobile loads frames-m/ (1080px).
+       Under reduced-motion the static poster (wrap background) shows. */
+    var FRAME_COUNT = 81;  /* update this if the rotation clip's frame count changes */
+    var HERO_ZOOM   = 0.55; /* growth across the scroll (0.55 = +55%) — Kling clip had no zoom, so we add it here */
+    var HERO_PAN    = 0.10; /* leftward drift under the headline as it grows, as a fraction of canvas width */
+    var heroWrap    = document.querySelector('.hero-art-wrap');
+    var heroSticky  = document.querySelector('.hero-sticky');
+    var heroMq      = window.matchMedia('(max-width: 900px)');
+    var heroCtx     = heroCanvas && heroCanvas.getContext ? heroCanvas.getContext('2d') : null;
+    var heroFrames  = [];
+    var heroDir     = null;  /* which frame set is loaded ('frames/' | 'frames-m/') */
+    var heroDpr     = Math.min(window.devicePixelRatio || 1, 2);
+    function heroEligible () {
+      return !!heroCtx && !reduced;   /* mobile runs the same scroll-scrub, just off a lighter frame set */
+    }
+    var heroActive = heroEligible();
+
+    function heroFramePath (dir, i) { var n = String(i + 1); while (n.length < 3) n = '0' + n; return dir + 'frame-' + n + '.webp'; }
+    function heroSizeCanvas () {
+      if (!heroCanvas) return;
+      var r = heroCanvas.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      heroCanvas.width  = Math.round(r.width  * heroDpr);
+      heroCanvas.height = Math.round(r.height * heroDpr);
+    }
+    function heroDraw (idx, p) {
+      if (!heroCtx) return;
+      p = p || 0;
+      var img = heroFrames[idx];
+      if (!img || !img.naturalWidth) return;            /* keep last frame if target not loaded yet */
+      var cw = heroCanvas.width, ch = heroCanvas.height;
+      var isM  = heroMq.matches;                        /* narrower canvas on mobile: keep the object centred */
+      var zAmt = isM ? 0.30 : HERO_ZOOM;                /* gentler push-in on mobile */
+      var pAmt = isM ? 0.0  : HERO_PAN;                 /* no left drift on mobile */
+      var zoom = 1 + zAmt * p;                          /* scroll-driven push-in */
+      var scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight) * zoom; /* object-fit: cover + zoom */
+      var dw = img.naturalWidth * scale, dh = img.naturalHeight * scale;
+      var dx = (cw - dw) / 2 - pAmt * cw * p;           /* drift left under the headline (desktop only) */
+      var dy = (ch - dh) / 2;
+      heroCtx.clearRect(0, 0, cw, ch);
+      heroCtx.drawImage(img, dx, dy, dw, dh);
+    }
+    function heroLoadFrames () {
+      var dir = heroMq.matches ? 'frames-m/' : 'frames/';
+      if (dir === heroDir) return;                      /* right set already loaded */
+      heroDir = dir;
+      heroFrames = [];
+      for (var hi = 0; hi < FRAME_COUNT; hi++) {
+        (function (i) {
+          var img = new Image();
+          img.onload = function () {
+            if (heroDir !== dir) return;                /* breakpoint changed again mid-load */
+            heroFrames[i] = img;
+            if (i === 0) { heroSizeCanvas(); heroScrollUpdate(); }
+          };
+          img.src = heroFramePath(dir, i);
+          if (img.decode) { try { img.decode().catch(function () {}); } catch (e) {} } /* eager decode, avoids first-scrub stutter */
+        })(hi);
+      }
+    }
+    if (heroActive) { heroSizeCanvas(); heroLoadFrames(); }
+
+    function heroScrollUpdate () {
+      if (!heroActive || !heroSticky) return;
+      var rect = heroSticky.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+      var p = -rect.top / (rect.height || window.innerHeight);
+      if (heroMq.matches) p *= 1.7;                     /* mobile: twist finishes in the first ~60% of scroll */
+      p = p < 0 ? 0 : (p > 1 ? 1 : p);
+      var idx = Math.floor(p * (FRAME_COUNT - 1));
+      heroDraw(idx, p);                                 /* redraw every tick: zoom/pan change continuously */
+      /* Dissolve the object as it zooms past the text: from 45% scrolled it eases
+         out, so the monolith melts into the page instead of getting cropped away.
+         (Fades the whole wrap — poster background included — text sits above.) */
+      if (heroWrap) {
+        var f = (p - 0.45) / 0.55;
+        f = f < 0 ? 0 : (f > 1 ? 1 : f);
+        heroWrap.style.opacity = String(1 - f * f);     /* ease-in fade: subtle at first, gone by the end */
+      }
+    }
+
+    function navScrolled () { if (siteHeader) siteHeader.classList.toggle('scrolled', window.scrollY > 24); }
+
+    /* Services: highlight the item nearest the viewport's vertical centre */
+    if (svcItems.length && 'IntersectionObserver' in window && !reduced) {
+      var svcIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting) {
+          svcItems.forEach(function (it) { it.classList.toggle('active', it === e.target); });
+        }});
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+      svcItems.forEach(function (it) { svcIO.observe(it); });
+      svcItems[0].classList.add('active');
+    }
+
+    var oRaf;
+    function onScroll () {
+      if (oRaf) return;
+      oRaf = requestAnimationFrame(function () { oRaf = null; heroScrollUpdate(); navScrolled(); });
+    }
+
+    /* Lenis smooth scroll (native scroll for reduced-motion) */
+    if (!reduced && window.Lenis) {
+      var lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+      lenis.on('scroll', onScroll);
+      function lenisRaf (t) { lenis.raf(t); requestAnimationFrame(lenisRaf); }
+      requestAnimationFrame(lenisRaf);
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          var id = a.getAttribute('href'); if (!id || id === '#') return;
+          var el = document.querySelector(id); if (!el) return;
+          e.preventDefault(); lenis.scrollTo(el, { offset: -72 });
+        });
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () {
+      heroActive = heroEligible();
+      if (heroActive) { heroSizeCanvas(); heroLoadFrames(); heroScrollUpdate(); }
+      onScroll();
+    }, { passive: true });
+    onScroll();
+  </script>
+</body>
+</html>
