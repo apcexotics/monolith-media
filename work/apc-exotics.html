@@ -78,34 +78,17 @@
     .btn-live { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border: 1.5px solid var(--ink); padding: 12px 20px; border-radius: 999px; margin-top: 26px; transition: background .18s, color .18s, transform .1s; }
     .btn-live:hover { background: var(--ink); color: var(--paper); transform: translateY(-1px); }
 
-    /* ── Live-UI board: apcexotics.com recreated by hand (crisp at any size,
-         nothing stretched) — fleet card, reserve flow, Google presence ── */
-    .build-board { background: #0b0a13; border-radius: 20px; padding: clamp(14px,2.4vw,28px); display: grid; grid-template-columns: 1.15fr .9fr; gap: clamp(12px,1.8vw,22px); box-shadow: 0 34px 64px -34px rgba(21,20,15,.5); }
+    /* ── Screenshot strip: real captures of apcexotics.com in a dark board.
+         Horizontal scroll on every breakpoint — swipe on mobile, drag/scroll
+         on desktop — so it never stacks tall or crops a tile. ── */
+    .build-board { background: #0b0a13; border-radius: 20px; padding: clamp(12px,2vw,22px); box-shadow: 0 34px 64px -34px rgba(21,20,15,.5); }
     .board-note { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 14px; }
-    .apc-panel { background: #12101d; border: 1px solid #272041; border-radius: 14px; color: #ecebf4; overflow: hidden; }
-    .apc-shot { position: relative; }
-    .apc-shot img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
-    .apc-flag { position: absolute; top: 14px; left: 14px; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .16em; color: #f5c451; background: rgba(30,24,6,.55); border: 1px solid rgba(245,196,81,.5); padding: 7px 12px; border-radius: 4px; backdrop-filter: blur(3px); }
-    .apc-price { position: absolute; right: 14px; bottom: 14px; background: linear-gradient(135deg,#8a63ff,#5b3df0); color: #fff; padding: 10px 18px 9px; border-radius: 6px; text-align: left; }
-    .apc-price b { font-size: clamp(20px,2.2vw,27px); font-weight: 800; letter-spacing: -.01em; display: block; line-height: 1; }
-    .apc-price span { font-family: var(--mono); font-size: 10px; letter-spacing: .2em; opacity: .85; }
-    .apc-body { padding: clamp(16px,2vw,24px); }
-    .apc-make { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .3em; color: #9d86ff; }
-    .apc-model { font-weight: 800; font-size: clamp(24px,2.6vw,34px); letter-spacing: .02em; margin-top: 4px; }
-    .apc-specs { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-top: 18px; padding-top: 16px; border-top: 1px solid #272041; }
-    .apc-specs b { display: block; font-size: clamp(16px,1.8vw,21px); font-weight: 700; }
-    .apc-specs span { font-family: var(--mono); font-size: 9px; letter-spacing: .16em; color: #8d88a6; display: block; margin-top: 4px; text-transform: uppercase; }
-    .apc-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px; padding-top: 16px; border-top: 1px solid #272041; font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: #8d88a6; text-transform: uppercase; }
-    .apc-book { border: 1px solid #4b3f80; color: #dcd6f6; padding: 10px 18px; border-radius: 4px; white-space: nowrap; }
-    .board-col { display: flex; flex-direction: column; gap: clamp(12px,1.8vw,22px); }
-    .apc-reserve, .apc-google { padding: clamp(16px,2vw,24px); }
-    .apc-kicker { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .24em; color: #9d86ff; text-transform: uppercase; }
-    .apc-h { font-weight: 800; font-size: clamp(20px,2.2vw,27px); letter-spacing: .02em; margin-top: 8px; }
-    .apc-phone { border: 1px solid #33295c; background: #161227; border-radius: 8px; text-align: center; padding: 16px 12px; margin-top: 14px; }
-    .apc-phone b { font-size: clamp(19px,2vw,24px); font-weight: 800; letter-spacing: .02em; display: block; }
-    .apc-phone span { font-family: var(--mono); font-size: 9px; letter-spacing: .2em; color: #8d88a6; display: block; margin-top: 6px; }
-    .apc-cta { display: block; text-align: center; background: linear-gradient(135deg,#8a63ff,#5b3df0); color: #fff; font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .22em; padding: 13px 10px; border-radius: 6px; margin-top: 12px; }
-    .apc-small { font-family: var(--mono); font-size: 10px; line-height: 1.7; letter-spacing: .05em; color: #8d88a6; margin-top: 12px; text-align: center; }
+    .ui-strip { display: flex; gap: clamp(10px,1.6vw,18px); overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; scrollbar-width: none; cursor: grab; }
+    .ui-strip::-webkit-scrollbar { display: none; }
+    .shot { flex: 0 0 auto; scroll-snap-align: center; height: clamp(380px,60vw,600px); border-radius: 12px; overflow: hidden; border: 1px solid #272041; background: #12101d; }
+    .shot img { height: 100%; width: auto; display: block; }
+    /* Google presence card rides the strip as its own tile */
+    .shot-card { width: min(320px,78vw); color: #ecebf4; padding: clamp(16px,2vw,24px); display: flex; flex-direction: column; justify-content: center; }
     .g-name { font-size: clamp(18px,2vw,23px); font-weight: 700; }
     .g-sub { font-size: 13px; color: #a9a4bd; margin-top: 3px; }
     .g-sub em { font-style: normal; color: #5fbf7a; }
@@ -116,8 +99,11 @@
     .site-footer { padding: 34px 0; }
     .foot-copy { color: var(--muted); font-size: 13px; }
 
-    @media (max-width: 820px){
-      .build-board { grid-template-columns: 1fr; }
+    @media (max-width: 700px){
+      /* phones: each tile fits the screen width, never cut off */
+      .ui-strip { align-items: center; }
+      .shot { height: auto; max-width: calc(100vw - 64px); }
+      .shot img { width: 100%; height: auto; }
     }
     @media (max-width: 760px){
       .case-grid { grid-template-columns: 1fr; gap: 14px; }
@@ -146,34 +132,11 @@
   </section>
 
   <div class="wrap rise rise-3">
-    <div class="build-board" role="img" aria-label="Recreated interface from apcexotics.com: fleet card, reserve flow, and Google Business presence">
-      <div class="apc-panel">
-        <div class="apc-shot">
-          <img src="apc-mclaren.webp" alt="Sky-blue McLaren 720S MSO from the APC Exotics fleet" width="1400" height="931" loading="eager" />
-          <span class="apc-flag">&#9679;&nbsp; BOOK 48HRS OUT</span>
-          <span class="apc-price"><b>$1,399</b><span>/ DAY</span></span>
-        </div>
-        <div class="apc-body">
-          <p class="apc-make">MCLAREN</p>
-          <p class="apc-model">720S MSO</p>
-          <div class="apc-specs">
-            <div><b>710</b><span>HP</span></div>
-            <div><b>2.8s</b><span>0&ndash;60</span></div>
-            <div><b>V8 TT</b><span>Engine</span></div>
-            <div><b>212</b><span>MPH top</span></div>
-          </div>
-          <div class="apc-foot"><span>Delivery &middot; LA / SFV</span><span class="apc-book">BOOK NOW</span></div>
-        </div>
-      </div>
-      <div class="board-col">
-        <div class="apc-panel apc-reserve">
-          <p class="apc-kicker">Request a vehicle</p>
-          <p class="apc-h">RESERVE YOUR CAR</p>
-          <div class="apc-phone"><b>(747) 217-2208</b><span>CALL OR TEXT &mdash; FASTEST RESPONSE</span></div>
-          <span class="apc-cta">REQUEST ACCESS</span>
-          <p class="apc-small">No spam. Response within 30 minutes.<br/>All rentals subject to provider approval.</p>
-        </div>
-        <div class="apc-panel apc-google">
+    <div class="build-board">
+      <div class="ui-strip" aria-label="Screenshots of apcexotics.com. Scroll sideways to see more.">
+        <div class="shot"><img src="apc-ui-fleet.webp" alt="Live fleet card on apcexotics.com: sky-blue McLaren 720S MSO at $1,399 a day, 710 hp, book now" width="876" height="912" /></div>
+        <div class="shot"><img src="apc-ui-modal.webp" alt="Reserve flow on apcexotics.com: call or text (747) 217-2208, or request access with dates in under a minute" width="908" height="1240" loading="lazy" /></div>
+        <div class="shot shot-card">
           <p class="g-name">APC Exotics</p>
           <p class="g-sub">Car rental agency &middot; <em>Open 24 hours</em> &middot; Sherman Oaks, CA</p>
           <p class="g-quote">&ldquo;<b>A San Fernando Valley&ndash;based exotic car broker</b> specializing in vetted exotic and luxury car rentals, offering white-glove, door-to-door delivery throughout the Los Angeles area.&rdquo;</p>
@@ -181,7 +144,7 @@
         </div>
       </div>
     </div>
-    <p class="board-note">Live UI from apcexotics.com &mdash; the fleet, reserve flow, and Google presence Monolith built and runs.</p>
+    <p class="board-note">Real screens from apcexotics.com &mdash; drag or swipe &#8594;</p>
   </div>
 
   <section class="case-section">
@@ -242,5 +205,37 @@
     <div class="wrap"><p class="foot-copy">&copy; 2026 Monolith Media Group. All rights reserved.</p></div>
   </footer>
 
+  <script>
+    /* Screenshot strip: mouse drag-to-scroll (touch + trackpad scroll natively) */
+    (function () {
+      var strip = document.querySelector('.ui-strip');
+      if (!strip) return;
+      var drag = null;
+      strip.addEventListener('pointerdown', function (e) {
+        if (e.pointerType === 'touch') return;
+        drag = { id: e.pointerId, x: e.clientX, left: strip.scrollLeft, moved: false };
+      });
+      strip.addEventListener('pointermove', function (e) {
+        if (!drag) return;
+        var dx = e.clientX - drag.x;
+        if (!drag.moved) {
+          if (Math.abs(dx) <= 6) return;
+          drag.moved = true;
+          strip.style.cursor = 'grabbing';
+          try { strip.setPointerCapture(drag.id); } catch (err) {}
+        }
+        strip.scrollLeft = drag.left - dx;
+      });
+      function end (e) {
+        if (!drag) return;
+        drag = null;
+        strip.style.cursor = '';
+        try { strip.releasePointerCapture(e.pointerId); } catch (err) {}
+      }
+      strip.addEventListener('pointerup', end);
+      strip.addEventListener('pointerleave', end);
+      strip.addEventListener('pointercancel', end);
+    })();
+  </script>
 </body>
 </html>
