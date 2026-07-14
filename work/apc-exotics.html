@@ -49,11 +49,9 @@
     .case-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
     .tag { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--ink); padding: 8px 14px; border-radius: 999px; }
 
-    .case-section { padding: clamp(36px,6vw,72px) 0; border-top: 1px solid var(--line); }
+    .case-section { padding: clamp(34px,5.6vw,64px) 0; border-top: 1px solid var(--line); }
     .case-grid { display: grid; grid-template-columns: 220px 1fr; gap: clamp(20px,4vw,56px); }
     .case-label { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); padding-top: 4px; }
-    .case-body { max-width: 640px; color: var(--ink); font-size: clamp(16px,1.9vw,19px); line-height: 1.6; }
-    .case-body p + p { margin-top: 16px; }
 
     .deliv { margin-top: 6px; border-top: 1px solid var(--line); }
     .deliv li { list-style: none; display: flex; gap: 14px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); font-weight: 600; }
@@ -64,13 +62,17 @@
     .metric b { display: block; font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(30px,4.4vw,52px); line-height: 1; letter-spacing: -.02em; color: var(--accent); }
     .metric span { display: block; margin-top: 10px; font-size: 14px; color: var(--muted); }
 
-    /* Testimonial */
-    .stars { color: var(--accent); font-size: 20px; letter-spacing: 4px; }
-    .quote { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(21px,2.8vw,30px); line-height: 1.3; letter-spacing: -.01em; margin-top: 14px; }
-    .quote-by { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 16px; }
+    /* Testimonial: white review card, Google/iOS style */
+    .review-card { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: clamp(24px,3.4vw,38px); box-shadow: 0 1px 2px rgba(21,20,15,.03), 0 20px 44px rgba(21,20,15,.08); max-width: 640px; }
+    .review-top { display: flex; align-items: center; gap: 14px; }
+    .review-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#d2603a,#8a3422); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 18px; flex: 0 0 auto; }
+    .review-who b { display: block; font-size: 15px; font-weight: 700; }
+    .review-who span { display: block; font-size: 13px; color: var(--muted); margin-top: 1px; }
+    .review-stars { color: #f4b400; font-size: 15px; letter-spacing: 2px; margin-top: 12px; display: block; }
+    .review-quote { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(19px,2.4vw,25px); line-height: 1.35; letter-spacing: -.01em; color: var(--ink); margin-top: 10px; }
 
     /* CTA band */
-    .case-cta { background: linear-gradient(118deg,#d2603a 0%,#c8553d 40%,#8a3422 100%); color: #f7f1e6; padding: clamp(48px,8vw,96px) 0; margin-top: clamp(36px,6vw,72px); }
+    .case-cta { background: linear-gradient(118deg,#d2603a 0%,#c8553d 40%,#8a3422 100%); color: #f7f1e6; padding: clamp(48px,8vw,96px) 0; margin-top: clamp(24px,4vw,48px); }
     .case-cta h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(28px,5vw,52px); line-height: 1.05; letter-spacing: -.02em; max-width: 700px; }
     .btn-paper { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; padding: 16px 26px; background: var(--paper); color: var(--ink); margin-top: 28px; transition: background .18s, transform .1s; }
     .btn-paper:hover { background: #fff; transform: translateY(-2px); }
@@ -78,31 +80,24 @@
     .btn-live { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; border: 1.5px solid var(--ink); padding: 12px 20px; border-radius: 999px; margin-top: 26px; transition: background .18s, color .18s, transform .1s; }
     .btn-live:hover { background: var(--ink); color: var(--paper); transform: translateY(-1px); }
 
-    /* ── Screenshot strip: real captures of apcexotics.com in a dark board.
-         Horizontal scroll on every breakpoint — swipe on mobile, drag/scroll
-         on desktop — so it never stacks tall or crops a tile. ── */
+    /* ── Screenshot board: real captures of apcexotics.com + the real Google
+         listing, in a dark board. Horizontal scroll on every breakpoint so
+         nothing stacks tall or crops a tile. ── */
     .build-board { background: #0b0a13; border-radius: 20px; padding: clamp(12px,2vw,22px); box-shadow: 0 34px 64px -34px rgba(21,20,15,.5); }
     .board-note { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 14px; }
-    .ui-strip { display: flex; gap: clamp(10px,1.6vw,18px); overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; scrollbar-width: none; cursor: grab; }
+    /* no scroll-snap on desktop: snapping fights the mouse drag and feels janky */
+    .ui-strip { display: flex; align-items: center; gap: clamp(10px,1.6vw,18px); overflow-x: auto; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; scrollbar-width: none; cursor: grab; }
     .ui-strip::-webkit-scrollbar { display: none; }
-    .shot { flex: 0 0 auto; scroll-snap-align: center; height: clamp(380px,60vw,600px); border-radius: 12px; overflow: hidden; border: 1px solid #272041; background: #12101d; }
+    .shot { flex: 0 0 auto; height: clamp(380px,60vw,600px); border-radius: 12px; overflow: hidden; border: 1px solid #272041; background: #12101d; }
     .shot img { height: 100%; width: auto; display: block; }
-    /* Google presence card rides the strip as its own tile */
-    .shot-card { width: min(320px,78vw); color: #ecebf4; padding: clamp(16px,2vw,24px); display: flex; flex-direction: column; justify-content: center; }
-    .g-name { font-size: clamp(18px,2vw,23px); font-weight: 700; }
-    .g-sub { font-size: 13px; color: #a9a4bd; margin-top: 3px; }
-    .g-sub em { font-style: normal; color: #5fbf7a; }
-    .g-quote { font-size: 13px; line-height: 1.55; color: #b9b4cd; border-top: 1px solid #272041; margin-top: 14px; padding-top: 14px; }
-    .g-quote b { color: #ecebf4; font-weight: 600; }
-    .g-label { font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .2em; color: #8d88a6; text-transform: uppercase; margin-top: 10px; display: block; }
 
     .site-footer { padding: 34px 0; }
     .foot-copy { color: var(--muted); font-size: 13px; }
 
     @media (max-width: 700px){
-      /* phones: each tile fits the screen width, never cut off */
-      .ui-strip { align-items: center; }
-      .shot { height: auto; max-width: calc(100vw - 64px); }
+      /* phones: swipe with snap, each tile fits the screen width, never cut off */
+      .ui-strip { scroll-snap-type: x mandatory; }
+      .shot { scroll-snap-align: center; height: auto; max-width: calc(100vw - 64px); }
       .shot img { width: 100%; height: auto; }
     }
     @media (max-width: 760px){
@@ -123,43 +118,25 @@
     <p class="case-kicker rise">01 / Client &middot; Case study</p>
     <h1 class="case-h1 rise rise-2">APC <em>Exotics.</em></h1>
     <p class="case-sub rise rise-3">The San Fernando Valley&rsquo;s only vetted exotic rental broker. Website, live booking, and search presence, all built by Monolith.</p>
-    <div class="case-tags rise rise-3">
-      <span class="tag">Website</span>
-      <span class="tag">Booking system</span>
-      <span class="tag">Local SEO</span>
-    </div>
     <a class="btn-live rise rise-3" href="https://apcexotics.com" target="_blank" rel="noopener">Visit apcexotics.com &#8599;</a>
   </section>
 
   <div class="wrap rise rise-3">
     <div class="build-board">
-      <div class="ui-strip" aria-label="Screenshots of apcexotics.com. Scroll sideways to see more.">
-        <div class="shot"><img src="apc-ui-fleet.webp" alt="Live fleet card on apcexotics.com: sky-blue McLaren 720S MSO at $1,399 a day, 710 hp, book now" width="876" height="912" /></div>
-        <div class="shot"><img src="apc-ui-modal.webp" alt="Reserve flow on apcexotics.com: call or text (747) 217-2208, or request access with dates in under a minute" width="908" height="1240" loading="lazy" /></div>
-        <div class="shot shot-card">
-          <p class="g-name">APC Exotics</p>
-          <p class="g-sub">Car rental agency &middot; <em>Open 24 hours</em> &middot; Sherman Oaks, CA</p>
-          <p class="g-quote">&ldquo;<b>A San Fernando Valley&ndash;based exotic car broker</b> specializing in vetted exotic and luxury car rentals, offering white-glove, door-to-door delivery throughout the Los Angeles area.&rdquo;</p>
-          <span class="g-label">Google &middot; AI Overview</span>
-        </div>
+      <div class="ui-strip" aria-label="Real screenshots of apcexotics.com and its Google listing. Scroll sideways to see more.">
+        <div class="shot"><img src="apc-shot-fleet.webp" alt="The live fleet on apcexotics.com: sky-blue McLaren 720S MSO at $1,399 a day, 710 hp, book now" width="860" height="1609" /></div>
+        <div class="shot"><img src="apc-shot-modal.webp" alt="Reserve flow on apcexotics.com: call or text (747) 217-2208, or request access with dates in under a minute" width="860" height="1520" loading="lazy" /></div>
+        <div class="shot"><img src="apc-shot-google.webp" alt="APC Exotics on Google: car rental agency, open 24 hours, with the AI Overview describing it as the San Fernando Valley's vetted exotic car broker" width="860" height="1438" loading="lazy" /></div>
+        <div class="shot"><img src="apc-shot-menu.webp" alt="apcexotics.com site navigation: fleet, partners, book, contact" width="860" height="1299" loading="lazy" /></div>
       </div>
     </div>
-    <p class="board-note">Real screens from apcexotics.com &mdash; drag or swipe &#8594;</p>
+    <p class="board-note">Real screens from apcexotics.com and Google &mdash; drag or swipe &#8594;</p>
   </div>
 
   <section class="case-section">
     <div class="wrap case-grid">
-      <p class="case-label">Overview</p>
-      <div class="case-body">
-        <p>APC Exotics delivers Lamborghinis, McLarens, and Rolls-Royces to verified clients anywhere in LA or the Valley &mdash; no counter, no pickup. Monolith built the whole operation online: the site, the vetting and reserve flow, and the search presence that has Google itself describing APC as the Valley&rsquo;s vetted exotic broker.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="case-section">
-    <div class="wrap case-grid">
       <p class="case-label">What we built</p>
-      <div class="case-body">
+      <div>
         <ul class="deliv">
           <li><span>01</span>Website with a live fleet: real cars, real daily rates</li>
           <li><span>02</span>Reserve flow: request a car in under a minute, by form or text</li>
@@ -173,7 +150,7 @@
   <section class="case-section">
     <div class="wrap case-grid">
       <p class="case-label">Results</p>
-      <div class="case-body" style="max-width:none">
+      <div style="max-width:none">
         <div class="metrics">
           <div class="metric"><b>24</b><span>cars bookable online, from Hurac&aacute;n to Cullinan</span></div>
           <div class="metric"><b>2hr</b><span>average delivery, anywhere in LA or the SFV</span></div>
@@ -184,12 +161,15 @@
   </section>
 
   <section class="case-section">
-    <div class="wrap case-grid">
-      <p class="case-label">From the client</p>
-      <div class="case-body">
-        <p class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>
-        <blockquote class="quote">&ldquo;In this business, if the site feels sketchy for even a second, that client is gone. Monolith built something that looks as expensive as the cars. People find us on Google, request a car, and my phone buzzes. That&rsquo;s the whole system.&rdquo;</blockquote>
-        <p class="quote-by">Founder, APC Exotics</p>
+    <div class="wrap">
+      <p class="case-label" style="margin-bottom:18px">From the client</p>
+      <div class="review-card">
+        <div class="review-top">
+          <span class="review-avatar" aria-hidden="true">A</span>
+          <span class="review-who"><b>Founder</b><span>APC Exotics</span></span>
+        </div>
+        <span class="review-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <blockquote class="review-quote">&ldquo;In this business, if the site feels sketchy for even a second, that client is gone. Monolith built something that looks as expensive as the cars. People find us on Google, request a car, and my phone buzzes. That&rsquo;s the whole system.&rdquo;</blockquote>
       </div>
     </div>
   </section>
@@ -211,6 +191,9 @@
       var strip = document.querySelector('.ui-strip');
       if (!strip) return;
       var drag = null;
+      /* images are natively draggable — the ghost-image drag is what makes
+         desktop dragging feel broken, so suppress it inside the strip */
+      strip.addEventListener('dragstart', function (e) { e.preventDefault(); });
       strip.addEventListener('pointerdown', function (e) {
         if (e.pointerType === 'touch') return;
         drag = { id: e.pointerId, x: e.clientX, left: strip.scrollLeft, moved: false };

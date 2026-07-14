@@ -47,6 +47,15 @@
       background: transparent; border-bottom: 1px solid transparent;
       transition: background .3s, border-color .3s, backdrop-filter .3s;
     }
+    /* Cream scrim under the nav at the top of the page: same color as the bg so
+       it's invisible on the field, but it keeps the header text readable when the
+       rotating monolith passes underneath. Fades out once the solid bar kicks in. */
+    .site-header::before {
+      content: ''; position: absolute; left: 0; right: 0; top: 0; bottom: -26px;
+      background: linear-gradient(to bottom, #e8dccc 0%, rgba(232,220,204,.85) 55%, rgba(232,220,204,0) 100%);
+      pointer-events: none; z-index: -1; transition: opacity .3s;
+    }
+    .site-header.scrolled::before { opacity: 0; }
     .site-header.scrolled { background: rgba(236,231,223,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
     .nav-group { display: flex; align-items: center; gap: 8px; flex: 1 1 0; }
     .nav-group.right { justify-content: flex-end; }
@@ -117,7 +126,7 @@
       font-size: clamp(280px,52vw,520px); line-height: 1;
       color: rgba(255,255,255,.07); pointer-events: none; user-select: none; z-index: 1;
     }
-    .statement-inner { position: relative; z-index: 2; padding: clamp(60px,11vw,120px) clamp(16px,4vw,40px); max-width: var(--maxw); margin: 0 auto; }
+    .statement-inner { position: relative; z-index: 2; padding: clamp(52px,6.5vw,88px) clamp(16px,4vw,40px); max-width: var(--maxw); margin: 0 auto; }
     .statement-h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(30px,6vw,58px); line-height: 1.04; letter-spacing: -.02em; color: #f7f1e6; max-width: 760px; margin-top: 18px; }
     .btn-paper { background: var(--paper); color: var(--ink); margin-top: 30px; }
     .btn-paper:hover { background: #fff; }
@@ -153,13 +162,17 @@
     [data-reveal].revealed { opacity: 1; transform: none; }
 
     /* ════════ ELEVATED SYSTEM ════════ */
-    .section-pad { padding: clamp(64px,10vw,128px) 0; }
+    .section-pad { padding: clamp(52px,6.5vw,88px) 0; }
     .sec-h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(28px,5vw,52px); line-height: 1.04; letter-spacing: -.02em; margin-top: 16px; max-width: 780px; }
 
-    /* Services: scroll-synced list (Dirt-style dim/brighten) */
-    .svc2-list { margin-top: clamp(30px,4vw,56px); border-top: 1px solid var(--line); }
+    /* Services: scroll-synced list (Dirt-style dim/brighten) inside a soft
+       off-white rounded card — a contained box on the cream field, not a full band */
+    .svc-card { background: #faf7f0; border: 1px solid var(--line); border-radius: 28px; padding: clamp(26px,3.4vw,54px) clamp(22px,3.2vw,50px) clamp(10px,1.4vw,20px); box-shadow: 0 1px 2px rgba(21,20,15,.03), 0 18px 40px rgba(21,20,15,.05); }
+    .svc-card .sec-h2 { margin-top: 0; }
+    .svc2-list { margin-top: clamp(26px,3.4vw,48px); border-top: 1px solid var(--line); }
     .svc2-item { display: grid; grid-template-columns: 56px 1fr; gap: clamp(14px,3vw,40px); padding: clamp(22px,3.4vw,42px) 0; border-bottom: 1px solid var(--line); opacity: .28; transition: opacity .45s ease; }
     .svc2-item.active { opacity: 1; }
+    .svc2-item:last-child { border-bottom: 0; }
     .svc2-no { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--accent); padding-top: 10px; }
     .svc2-h { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(28px,5vw,56px); line-height: 1.02; letter-spacing: -.022em; }
     .svc2-p { font-size: 16px; color: var(--muted); max-width: 540px; margin-top: 12px; line-height: 1.5; }
@@ -168,7 +181,8 @@
     /* Selected work: filmstrip (horizontal scroll on every breakpoint) */
     .work-head { display: flex; flex-direction: column; }
     .work-note { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 14px; }
-    .film { display: flex; gap: clamp(14px,1.6vw,22px); overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; padding: clamp(26px,3.4vw,44px) clamp(16px,4vw,48px) 8px; scrollbar-width: none; cursor: grab; }
+    /* no scroll-snap on desktop: snapping fights the mouse drag and feels janky */
+    .film { display: flex; gap: clamp(14px,1.6vw,22px); overflow-x: auto; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; padding: clamp(26px,3.4vw,44px) clamp(16px,4vw,48px) 8px; scrollbar-width: none; cursor: grab; }
     .film::-webkit-scrollbar { display: none; }
     .film.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
     .film.dragging .tile { pointer-events: none; }
@@ -181,12 +195,12 @@
     .tile-corner { position: absolute; top: clamp(17px,2vw,23px); right: clamp(18px,2vw,24px); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; opacity: .62; }
     .tile-name { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(26px,3vw,38px); line-height: 1.02; letter-spacing: -.02em; }
     .tile-desc { font-size: 14px; line-height: 1.45; margin-top: 10px; opacity: .82; max-width: 36ch; }
-    .tile-metric { display: inline-block; margin-top: 14px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; opacity: .72; }
     .tile-link { display: block; }
     .tile-cta { display: block; margin-top: 12px; font-size: 14px; font-weight: 600; opacity: 0; transform: translateY(4px); transition: opacity .3s ease, transform .3s ease; }
     .tile:hover .tile-cta { opacity: .9; transform: none; }
     @media (max-width: 900px){
-      .film { padding-left: 7vw; padding-right: 7vw; }
+      /* phones: swipe with per-tile snap */
+      .film { padding-left: 7vw; padding-right: 7vw; scroll-snap-type: x mandatory; }
       .tile { flex: 0 0 86vw; scroll-snap-align: center; }
       /* min-height + aspect-ratio would force a 373px floor that overflows
          narrow phones — let the aspect ratio alone size the card */
@@ -257,11 +271,13 @@
   <!-- ── SERVICES ───────────────────────────────────────────────── -->
   <section class="section-pad" id="services">
     <div class="wrap">
-      <h2 class="sec-h2" data-reveal="up">One studio for everything your business does online.</h2>
-      <div class="svc2-list" id="svcList">
-        <article class="svc2-item"><span class="svc2-no">01</span><div><h3 class="svc2-h">Get more booked jobs</h3><p class="svc2-p">Fast, mobile-first sites and booking flows that turn visitors into paying customers.</p></div></article>
-        <article class="svc2-item"><span class="svc2-no">02</span><div><h3 class="svc2-h">Get found on Google</h3><p class="svc2-p">Local SEO and search presence sorted, so the right people find you first.</p></div></article>
-        <article class="svc2-item"><span class="svc2-no">03</span><div><h3 class="svc2-h">Be the obvious choice</h3><p class="svc2-p">Reviews, content, and brand that make you the one they trust and call first.</p></div></article>
+      <div class="svc-card" data-reveal="up">
+        <h2 class="sec-h2">One studio for everything your business does online.</h2>
+        <div class="svc2-list" id="svcList">
+          <article class="svc2-item"><span class="svc2-no">01</span><div><h3 class="svc2-h">Get more booked jobs</h3><p class="svc2-p">Fast, mobile-first sites and booking flows that turn visitors into paying customers.</p></div></article>
+          <article class="svc2-item"><span class="svc2-no">02</span><div><h3 class="svc2-h">Get found on Google</h3><p class="svc2-p">Local SEO and search presence sorted, so the right people find you first.</p></div></article>
+          <article class="svc2-item"><span class="svc2-no">03</span><div><h3 class="svc2-h">Be the obvious choice</h3><p class="svc2-p">Reviews, content, and brand that make you the one they trust and call first.</p></div></article>
+        </div>
       </div>
     </div>
   </section>
@@ -280,7 +296,6 @@
           <div>
             <h3 class="tile-name">APC Exotics</h3>
             <p class="tile-desc">Website, live booking, and page-one Google presence for the Valley&rsquo;s vetted exotic rental broker.</p>
-            <span class="tile-metric">24 cars &middot; 2hr delivery &middot; Open 24/7</span>
             <span class="tile-cta">View case study &#8594;</span>
           </div>
         </div>
@@ -292,8 +307,7 @@
           <span class="tile-corner">02 / Client</span>
           <div>
             <h3 class="tile-name">Vizibl Management</h3>
-            <p class="tile-desc">Brand site and lead capture for the talent studio partnered with Paramount and Meta.</p>
-            <span class="tile-metric">Brand &middot; Site &middot; Lead capture</span>
+            <p class="tile-desc">Brand site and lead capture for a talent venture whose partners include Paramount, Meta, and Amazon.</p>
             <span class="tile-cta">View case study &#8594;</span>
           </div>
         </div>
@@ -462,6 +476,9 @@
     if (filmEl) {
       var dragState = null;
       var dragMoved = false;
+      /* anchors are natively draggable — the ghost-link drag is what makes
+         desktop dragging feel broken, so suppress it inside the strip */
+      filmEl.addEventListener('dragstart', function (e) { e.preventDefault(); });
       filmEl.addEventListener('pointerdown', function (e) {
         if (e.pointerType === 'touch') return;
         dragState = { pointerId: e.pointerId, startX: e.clientX, scrollLeft: filmEl.scrollLeft };
