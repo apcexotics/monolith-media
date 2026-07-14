@@ -85,19 +85,26 @@
          nothing stacks tall or crops a tile. ── */
     .build-board { background: #0b0a13; border-radius: 20px; padding: clamp(12px,2vw,22px); box-shadow: 0 34px 64px -34px rgba(21,20,15,.5); }
     .board-note { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 14px; }
-    /* no scroll-snap on desktop: snapping fights the mouse drag and feels janky */
-    .ui-strip { display: flex; align-items: center; gap: clamp(10px,1.6vw,18px); overflow-x: auto; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; scrollbar-width: none; cursor: grab; }
+    /* Auto-scrolling marquee inside the board (replaces the janky click-drag).
+       .ui-track holds two identical halves → translateX(-50%) loops seamlessly. */
+    .ui-strip { overflow: hidden; scrollbar-width: none; }
     .ui-strip::-webkit-scrollbar { display: none; }
-    .shot { flex: 0 0 auto; height: clamp(380px,60vw,600px); border-radius: 12px; overflow: hidden; border: 1px solid #272041; background: #12101d; }
+    .ui-track { display: flex; align-items: center; width: max-content; animation: marquee 44s linear infinite; }
+    .ui-strip:hover .ui-track { animation-play-state: paused; }
+    .shot { flex: 0 0 auto; height: clamp(380px,60vw,600px); margin-right: clamp(10px,1.6vw,18px); border-radius: 12px; overflow: hidden; border: 1px solid #272041; background: #12101d; }
     .shot img { height: 100%; width: auto; display: block; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce){
+      .ui-track { animation: none; }
+      .ui-strip { overflow-x: auto; }   /* fall back to manual scroll when motion is off */
+    }
 
     .site-footer { padding: 34px 0; }
     .foot-copy { color: var(--muted); font-size: 13px; }
 
     @media (max-width: 700px){
-      /* phones: swipe with snap, each tile fits the screen width, never cut off */
-      .ui-strip { scroll-snap-type: x mandatory; }
-      .shot { scroll-snap-align: center; height: auto; max-width: calc(100vw - 64px); }
+      /* phones: same tile sizing, still marqueeing */
+      .shot { height: auto; max-width: calc(100vw - 64px); }
       .shot img { width: 100%; height: auto; }
     }
     @media (max-width: 760px){
@@ -123,14 +130,21 @@
 
   <div class="wrap rise rise-3">
     <div class="build-board">
-      <div class="ui-strip" aria-label="Real screenshots of apcexotics.com and its Google listing. Scroll sideways to see more.">
-        <div class="shot"><img src="apc-shot-fleet.webp" alt="The live fleet on apcexotics.com: sky-blue McLaren 720S MSO at $1,399 a day, 710 hp, book now" width="860" height="1609" /></div>
-        <div class="shot"><img src="apc-shot-modal.webp" alt="Reserve flow on apcexotics.com: call or text (747) 217-2208, or request access with dates in under a minute" width="860" height="1520" loading="lazy" /></div>
-        <div class="shot"><img src="apc-shot-google.webp" alt="APC Exotics on Google: car rental agency, open 24 hours, with the AI Overview describing it as the San Fernando Valley's vetted exotic car broker" width="860" height="1438" loading="lazy" /></div>
-        <div class="shot"><img src="apc-shot-menu.webp" alt="apcexotics.com site navigation: fleet, partners, book, contact" width="860" height="1299" loading="lazy" /></div>
+      <div class="ui-strip" aria-label="Real screenshots of apcexotics.com and its Google listing.">
+        <div class="ui-track">
+          <div class="shot"><img src="apc-shot-fleet.webp" alt="The live fleet on apcexotics.com: sky-blue McLaren 720S MSO at $1,399 a day, 710 hp, book now" width="860" height="1609" /></div>
+          <div class="shot"><img src="apc-shot-modal.webp" alt="Reserve flow on apcexotics.com: call or text (747) 217-2208, or request access with dates in under a minute" width="860" height="1520" /></div>
+          <div class="shot"><img src="apc-shot-google.webp" alt="APC Exotics on Google: car rental agency, open 24 hours, with the AI Overview describing it as the San Fernando Valley's vetted exotic car broker" width="860" height="1438" /></div>
+          <div class="shot"><img src="apc-shot-menu.webp" alt="apcexotics.com site navigation: fleet, partners, book, contact" width="860" height="1299" /></div>
+          <!-- duplicate set for the seamless marquee loop -->
+          <div class="shot" aria-hidden="true"><img src="apc-shot-fleet.webp" alt="" width="860" height="1609" /></div>
+          <div class="shot" aria-hidden="true"><img src="apc-shot-modal.webp" alt="" width="860" height="1520" /></div>
+          <div class="shot" aria-hidden="true"><img src="apc-shot-google.webp" alt="" width="860" height="1438" /></div>
+          <div class="shot" aria-hidden="true"><img src="apc-shot-menu.webp" alt="" width="860" height="1299" /></div>
+        </div>
       </div>
     </div>
-    <p class="board-note">Real screens from apcexotics.com and Google &mdash; drag or swipe &#8594;</p>
+    <p class="board-note">Real screens from apcexotics.com and Google</p>
   </div>
 
   <section class="case-section">
@@ -185,40 +199,5 @@
     <div class="wrap"><p class="foot-copy">&copy; 2026 Monolith Media Group. All rights reserved.</p></div>
   </footer>
 
-  <script>
-    /* Screenshot strip: mouse drag-to-scroll (touch + trackpad scroll natively) */
-    (function () {
-      var strip = document.querySelector('.ui-strip');
-      if (!strip) return;
-      var drag = null;
-      /* images are natively draggable — the ghost-image drag is what makes
-         desktop dragging feel broken, so suppress it inside the strip */
-      strip.addEventListener('dragstart', function (e) { e.preventDefault(); });
-      strip.addEventListener('pointerdown', function (e) {
-        if (e.pointerType === 'touch') return;
-        drag = { id: e.pointerId, x: e.clientX, left: strip.scrollLeft, moved: false };
-      });
-      strip.addEventListener('pointermove', function (e) {
-        if (!drag) return;
-        var dx = e.clientX - drag.x;
-        if (!drag.moved) {
-          if (Math.abs(dx) <= 6) return;
-          drag.moved = true;
-          strip.style.cursor = 'grabbing';
-          try { strip.setPointerCapture(drag.id); } catch (err) {}
-        }
-        strip.scrollLeft = drag.left - dx;
-      });
-      function end (e) {
-        if (!drag) return;
-        drag = null;
-        strip.style.cursor = '';
-        try { strip.releasePointerCapture(e.pointerId); } catch (err) {}
-      }
-      strip.addEventListener('pointerup', end);
-      strip.addEventListener('pointerleave', end);
-      strip.addEventListener('pointercancel', end);
-    })();
-  </script>
 </body>
 </html>

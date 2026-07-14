@@ -85,22 +85,29 @@
          nothing stacks tall or crops a tile. ── */
     .build-board { background: #111113; border-radius: 20px; padding: clamp(12px,2vw,22px); box-shadow: 0 34px 64px -34px rgba(21,20,15,.5); }
     .board-note { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 14px; }
-    /* no scroll-snap on desktop: snapping fights the mouse drag and feels janky */
-    .ui-strip { display: flex; align-items: center; gap: clamp(10px,1.6vw,18px); overflow-x: auto; -webkit-overflow-scrolling: touch; touch-action: pan-x pan-y; scrollbar-width: none; cursor: grab; }
+    /* Auto-scrolling marquee inside the board (replaces the janky click-drag).
+       .ui-track holds two identical halves → translateX(-50%) loops seamlessly. */
+    .ui-strip { overflow: hidden; scrollbar-width: none; }
     .ui-strip::-webkit-scrollbar { display: none; }
-    .shot { flex: 0 0 auto; height: clamp(380px,60vw,600px); border-radius: 12px; overflow: hidden; border: 1px solid #26262a; background: #0b0b0d; }
+    .ui-track { display: flex; align-items: center; width: max-content; animation: marquee 38s linear infinite; }
+    .ui-strip:hover .ui-track { animation-play-state: paused; }
+    .shot { flex: 0 0 auto; height: clamp(380px,60vw,600px); margin-right: clamp(10px,1.6vw,18px); border-radius: 12px; overflow: hidden; border: 1px solid #26262a; background: #0b0b0d; }
     .shot img { height: 100%; width: auto; display: block; }
     /* the real Google result is a landscape capture, so it gets its own sizing */
     .shot-wide { height: auto; width: min(560px,82vw); }
     .shot-wide img { width: 100%; height: auto; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce){
+      .ui-track { animation: none; }
+      .ui-strip { overflow-x: auto; }   /* fall back to manual scroll when motion is off */
+    }
 
     .site-footer { padding: 34px 0; }
     .foot-copy { color: var(--muted); font-size: 13px; }
 
     @media (max-width: 700px){
-      /* phones: swipe with snap, each tile fits the screen width, never cut off */
-      .ui-strip { scroll-snap-type: x mandatory; }
-      .shot { scroll-snap-align: center; height: auto; max-width: calc(100vw - 64px); }
+      /* phones: same tile sizing, still marqueeing */
+      .shot { height: auto; max-width: calc(100vw - 64px); }
       .shot img { width: 100%; height: auto; }
       .shot-wide { width: calc(100vw - 64px); }
     }
@@ -127,13 +134,19 @@
 
   <div class="wrap rise rise-3">
     <div class="build-board">
-      <div class="ui-strip" aria-label="Real screenshots of viziblmgmt.com and its Google listing. Scroll sideways to see more.">
-        <div class="shot"><img src="viz-shot-hero.webp" alt="viziblmgmt.com hero: social strategy and creative studio — we build systems that grow your digital brand" width="860" height="1094" /></div>
-        <div class="shot shot-wide"><img src="viz-shot-google.webp" alt="Vizibl on Google: viziblmgmt.com listed as vizibl media, we build systems that grow your digital brand" width="900" height="518" loading="lazy" /></div>
-        <div class="shot"><img src="viz-shot-menu.webp" alt="viziblmgmt.com navigation: search, home, portfolio, contact us" width="860" height="730" loading="lazy" /></div>
+      <div class="ui-strip" aria-label="Real screenshots of viziblmgmt.com and its Google listing.">
+        <div class="ui-track">
+          <div class="shot"><img src="viz-shot-hero.webp" alt="viziblmgmt.com hero: social strategy and creative studio — we build systems that grow your digital brand" width="860" height="1094" /></div>
+          <div class="shot shot-wide"><img src="viz-shot-google.webp" alt="Vizibl on Google: viziblmgmt.com listed as vizibl media, we build systems that grow your digital brand" width="900" height="518" /></div>
+          <div class="shot"><img src="viz-shot-menu.webp" alt="viziblmgmt.com navigation: search, home, portfolio, contact us" width="860" height="730" /></div>
+          <!-- duplicate set for the seamless marquee loop -->
+          <div class="shot" aria-hidden="true"><img src="viz-shot-hero.webp" alt="" width="860" height="1094" /></div>
+          <div class="shot shot-wide" aria-hidden="true"><img src="viz-shot-google.webp" alt="" width="900" height="518" /></div>
+          <div class="shot" aria-hidden="true"><img src="viz-shot-menu.webp" alt="" width="860" height="730" /></div>
+        </div>
       </div>
     </div>
-    <p class="board-note">Real screens from viziblmgmt.com and Google &mdash; drag or swipe &#8594;</p>
+    <p class="board-note">Real screens from viziblmgmt.com and Google</p>
   </div>
 
   <section class="case-section">
@@ -187,40 +200,5 @@
     <div class="wrap"><p class="foot-copy">&copy; 2026 Monolith Media Group. All rights reserved.</p></div>
   </footer>
 
-  <script>
-    /* Screenshot strip: mouse drag-to-scroll (touch + trackpad scroll natively) */
-    (function () {
-      var strip = document.querySelector('.ui-strip');
-      if (!strip) return;
-      var drag = null;
-      /* images are natively draggable — the ghost-image drag is what makes
-         desktop dragging feel broken, so suppress it inside the strip */
-      strip.addEventListener('dragstart', function (e) { e.preventDefault(); });
-      strip.addEventListener('pointerdown', function (e) {
-        if (e.pointerType === 'touch') return;
-        drag = { id: e.pointerId, x: e.clientX, left: strip.scrollLeft, moved: false };
-      });
-      strip.addEventListener('pointermove', function (e) {
-        if (!drag) return;
-        var dx = e.clientX - drag.x;
-        if (!drag.moved) {
-          if (Math.abs(dx) <= 6) return;
-          drag.moved = true;
-          strip.style.cursor = 'grabbing';
-          try { strip.setPointerCapture(drag.id); } catch (err) {}
-        }
-        strip.scrollLeft = drag.left - dx;
-      });
-      function end (e) {
-        if (!drag) return;
-        drag = null;
-        strip.style.cursor = '';
-        try { strip.releasePointerCapture(e.pointerId); } catch (err) {}
-      }
-      strip.addEventListener('pointerup', end);
-      strip.addEventListener('pointerleave', end);
-      strip.addEventListener('pointercancel', end);
-    })();
-  </script>
 </body>
 </html>
