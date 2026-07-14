@@ -41,7 +41,8 @@
     @media (prefers-reduced-motion: reduce){ .rise { animation: none; } }
 
     /* Case hero */
-    .case-hero { padding: clamp(48px,9vh,110px) 0 clamp(28px,5vh,56px); }
+    /* vertical only — keep .wrap's horizontal padding so hero text never touches the edge on mobile */
+    .case-hero { padding-top: clamp(48px,9vh,110px); padding-bottom: clamp(28px,5vh,56px); }
     .case-kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
     .case-h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(42px,8vw,96px); line-height: .98; letter-spacing: -.028em; margin-top: 16px; }
     .case-h1 em { font-style: italic; color: var(--accent); }
@@ -58,12 +59,12 @@
     .deliv li span { font-family: var(--mono); font-size: 12px; color: var(--accent); }
 
     .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px,2vw,22px); }
-    .metric { border: 1px solid var(--line); background: var(--paper2); border-radius: 16px; padding: clamp(18px,2.4vw,28px); }
+    .metric { border: 1px solid var(--line); background: #faf7f0; border-radius: 16px; padding: clamp(18px,2.4vw,28px); }
     .metric b { display: block; font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(30px,4.4vw,52px); line-height: 1; letter-spacing: -.02em; color: var(--accent); }
     .metric span { display: block; margin-top: 10px; font-size: 14px; color: var(--muted); }
 
     /* Testimonial: white review card, Google/iOS style */
-    .review-card { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: clamp(24px,3.4vw,38px); box-shadow: 0 1px 2px rgba(21,20,15,.03), 0 20px 44px rgba(21,20,15,.08); max-width: 640px; }
+    .review-card { background: #faf7f0; border: 1px solid var(--line); border-radius: 20px; padding: clamp(24px,3.4vw,38px); box-shadow: 0 1px 2px rgba(21,20,15,.03), 0 20px 44px rgba(21,20,15,.08); max-width: 640px; }
     .review-top { display: flex; align-items: center; gap: 14px; }
     .review-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#d2603a,#8a3422); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 18px; flex: 0 0 auto; }
     .review-who b { display: block; font-size: 15px; font-weight: 700; }
@@ -89,7 +90,7 @@
        .ui-track holds two identical halves → translateX(-50%) loops seamlessly. */
     .ui-strip { overflow: hidden; scrollbar-width: none; }
     .ui-strip::-webkit-scrollbar { display: none; }
-    .ui-track { display: flex; align-items: center; width: max-content; animation: marquee 44s linear infinite; }
+    .ui-track { display: flex; align-items: center; width: max-content; animation: marquee 30s linear infinite; }
     .ui-strip:hover .ui-track { animation-play-state: paused; }
     .shot { flex: 0 0 auto; height: clamp(380px,60vw,600px); margin-right: clamp(10px,1.6vw,18px); border-radius: 12px; overflow: hidden; border: 1px solid #272041; background: #12101d; }
     .shot img { height: 100%; width: auto; display: block; }
