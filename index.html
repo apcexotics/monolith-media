@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Monolith Media Group</title>
   <meta name="description" content="Monolith builds growth infrastructure for local businesses: more inquiries, more booked appointments, and a brand that looks like the obvious premium choice online." />
-  <meta name="theme-color" content="#e8dccc" />
+  <meta name="theme-color" content="#ece7df" />
   <link rel="icon" type="image/png" href="monogram.png" />
   <link rel="preload" as="image" href="hero-monolith.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,16 +14,42 @@
   <style>
     /* ── Tokens ───────────────────────────────────────────────────── */
     :root {
-      --ink: #15140f; --paper: #f6f4ee; --paper2: #efece3;
-      --line: #ddd9cc; --muted: #76726a;
-      --accent: #c8553d; --accent-dk: #a8412c;
-      --accent-soft: #e3a18f; --maxw: 1120px;
+      /* Light — Paper & Forest */
+      color-scheme: light;
+      --bg: #f7f5f0; --surface: #fbfaf6; --field: #ffffff;
+      --ink: #14150f; --paper: #f5f2ea; --paper2: #ece7db;
+      --muted: #6b6a5f; --line: #ddd8c8;
+      --accent: #1f4d3a; --accent-dk: #163a2a; --accent-soft: #7fa08e;
+      --on-accent: #f5f2ea;
+      --panel: #14150f; --on-panel: #f5f2ea; --on-panel-muted: #b8b6a8; --panel-line: #2a2a22;
+      --cta-bg: #14150f; --cta-text: #f5f2ea; --cta-hover: #2a2a22;
+      --pill-bg: #ece7db; --pill-hover: #e0dbc9;
+      --halo: rgba(247,245,240,.7); --halo-soft: rgba(247,245,240,.55);
+      --statement-bg: linear-gradient(118deg,#2f6b4f 0%,#1f4d3a 28%,#163a2a 60%,#0d1912 100%);
+      --hero-poster: url('hero-monolith.webp');
+      --success: #2ecc71;
+      --maxw: 1120px;
       --mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    :root[data-theme="dark"] {
+      /* Dark — Black & Sand */
+      color-scheme: dark;
+      --bg: #101010; --surface: #1c1c1c; --field: #191919;
+      --ink: #ebdfc8; --paper: #ebdfc8; --paper2: #232323;
+      --muted: #a6a194; --line: #2c2b28;
+      --accent: #a57c45; --accent-dk: #b98d52; --accent-soft: #cbab8a;
+      --on-accent: #14110b;
+      --panel: #1c1c1c; --on-panel: #ebdfc8; --on-panel-muted: #8f897b; --panel-line: #2c2b28;
+      --cta-bg: #a57c45; --cta-text: #101010; --cta-hover: #b98d52;
+      --pill-bg: #1c1c1c; --pill-hover: #2a2925;
+      --halo: rgba(8,8,8,.55); --halo-soft: rgba(8,8,8,.45);
+      --statement-bg: linear-gradient(118deg,#4a3a22 0%,#2e2515 34%,#1a1712 70%,#0d0d0d 100%);
+      --hero-poster: url('hero-monolith-dark.webp');
     }
     /* ── Reset ────────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-    body { background: #e8dccc; color: var(--ink); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--ink); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; transition: background-color .4s ease, color .4s ease; }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
     button { font-family: inherit; cursor: pointer; }
@@ -52,40 +78,59 @@
        rotating monolith passes underneath. Fades out once the solid bar kicks in. */
     .site-header::before {
       content: ''; position: absolute; left: 0; right: 0; top: 0; bottom: -26px;
-      background: linear-gradient(to bottom, #e8dccc 0%, rgba(232,220,204,.85) 55%, rgba(232,220,204,0) 100%);
+      background: linear-gradient(to bottom, var(--bg) 0%, color-mix(in srgb, var(--bg) 85%, transparent) 55%, transparent 100%);
       pointer-events: none; z-index: -1; transition: opacity .3s;
     }
     .site-header.scrolled::before { opacity: 0; }
-    .site-header.scrolled { background: rgba(236,231,223,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    .site-header.scrolled { background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
     .nav-group { display: flex; align-items: center; gap: 8px; flex: 1 1 0; }
     .nav-group.right { justify-content: flex-end; }
     .nav-brand { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(20px,2.6vw,27px); letter-spacing: .01em; color: var(--ink); white-space: nowrap; flex: 0 0 auto; }
-    .pill { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--ink); background: #e7e2d6; padding: 9px 17px; border-radius: 8px; transition: background .18s, color .18s, transform .1s; }
-    .pill:hover { background: #ddd8ca; transform: translateY(-1px); }
-    .pill-dark { background: var(--ink); color: var(--paper); }
-    .pill-dark:hover { background: #2b2a24; }
+    .pill { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--ink); background: var(--pill-bg); padding: 9px 17px; border-radius: 8px; transition: background .18s, color .18s, transform .1s; }
+    .pill:hover { background: var(--pill-hover); transform: translateY(-1px); }
+    .pill-dark { background: var(--cta-bg); color: var(--cta-text); }
+    .pill-dark:hover { background: var(--cta-hover); }
+    /* Light/dark toggle */
+    .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; flex: 0 0 auto; background: var(--pill-bg); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; font-size: 15px; line-height: 1; transition: background .18s, color .18s, transform .1s; }
+    .theme-toggle:hover { background: var(--pill-hover); transform: translateY(-1px); }
+    .theme-toggle .ti-sun { display: none; }
+    .theme-toggle .ti-moon { display: inline; }
+    :root[data-theme="dark"] .theme-toggle .ti-sun { display: inline; }
+    :root[data-theme="dark"] .theme-toggle .ti-moon { display: none; }
     @media (max-width: 680px){ .nav-group.left { display: none; } .nav-group.right .pill:not(.pill-dark) { display: none; } }
 
     /* ── Hero ─────────────────────────────────────────────────────── */
-    .hero-scroll { position: relative; background: #e8dccc; }
-    .hero-sticky { position: relative; min-height: clamp(620px,94vh,1040px); overflow: hidden; display: flex; align-items: center; background: #e8dccc; }
+    .hero-scroll { position: relative; background: var(--bg); }
+    .hero-sticky { position: relative; min-height: clamp(620px,94vh,1040px); overflow: hidden; display: flex; align-items: center; background: var(--bg); }
     .hero-art-wrap {
       position: absolute; right: 0; top: 0; bottom: 0; z-index: 0; height: 100%; width: min(78%,1280px);
       overflow: hidden; pointer-events: none;
-      background: #e8dccc url('hero-monolith.webp') center center / cover no-repeat;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
+      background: var(--bg) var(--hero-poster) center center / cover no-repeat;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 34%, #000 70%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%);
       -webkit-mask-composite: source-in;
-      mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, #000 34%, #000 70%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%);
       mask-composite: intersect;
     }
-    .hero-art { width: 100%; height: 100%; display: block; }
+    /* Color-matched scrim over the same fade zone: alpha masking alone only hides the seam
+       if the frame's edge pixel already equals --bg exactly, which drifts frame-to-frame.
+       This actively blends the edge tone toward --bg so no rectangle is ever visible.
+       Vertical zone stays tight (object peak sits ~12% from top) so it doesn't eat the tip. */
+    .hero-art-wrap::after {
+      content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background:
+        linear-gradient(to right, var(--bg) 0%, color-mix(in srgb, var(--bg) 60%, transparent) 20%, transparent 40%, transparent 62%, color-mix(in srgb, var(--bg) 55%, transparent) 82%, var(--bg) 100%),
+        linear-gradient(to bottom, var(--bg) 0%, transparent 9%, transparent 91%, var(--bg) 100%);
+    }
+    .hero-art { width: 100%; height: 100%; display: block; position: relative; z-index: 0; }
     .hero-content { position: relative; z-index: 2; width: 100%; max-width: var(--maxw); margin: 0 auto; padding: clamp(40px,8vh,96px) clamp(16px,4vw,48px); }
     .hero-left { max-width: 600px; }
 
-    .hero-h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(46px,8.4vw,104px); line-height: .96; letter-spacing: -.028em; color: var(--ink); margin-top: 22px; }
+    /* Cream halo keeps the dark ink legible where it crosses the dark monolith,
+       while staying invisible over the cream page (cream-on-cream). */
+    .hero-h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(46px,8.4vw,104px); line-height: .96; letter-spacing: -.028em; color: var(--ink); margin-top: 22px; text-shadow: 0 1px 2px var(--halo-soft), 0 0 22px var(--halo); }
     .hero-h1 em { font-style: italic; color: var(--accent); }
 
-    .hero-sub { font-size: clamp(16px,2vw,20px); color: var(--muted); max-width: 440px; margin-top: 24px; }
+    .hero-sub { font-size: clamp(16px,2vw,20px); color: var(--muted); max-width: 440px; margin-top: 24px; text-shadow: 0 1px 12px var(--halo); }
     .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
 
     @media (max-width: 900px){
@@ -94,30 +139,35 @@
          left feather so the copy always sits on calm cream, not on the object. */
       .hero-sticky { min-height: 88vh; display: flex; align-items: center; }
       .hero-art-wrap { position: absolute; left: 26%; right: -42%; top: 0; bottom: 0; width: auto; height: 100%; aspect-ratio: auto; margin-top: 0;
-        -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 48%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 54%, #000 78%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%);
         -webkit-mask-composite: source-in;
-        mask-image: linear-gradient(to right, transparent 0%, #000 48%, #000 90%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0%, #000 54%, #000 78%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%);
         mask-composite: intersect; }
+      .hero-art-wrap::after {
+        background:
+          linear-gradient(to right, var(--bg) 0%, color-mix(in srgb, var(--bg) 60%, transparent) 46%, transparent 62%, transparent 68%, var(--bg) 100%),
+          linear-gradient(to bottom, var(--bg) 0%, transparent 9%, transparent 91%, var(--bg) 100%);
+      }
       .hero-art { display: block; }
       .hero-content { padding-top: clamp(64px,14vh,120px); padding-bottom: 40px; }
       /* Ghost button reads poorly over the object: give it a frosted cream fill
          (still bordered, still turns solid ink on press) */
-      .hero-ctas .btn-ghost-light { background: rgba(232,220,204,.72); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+      .hero-ctas .btn-ghost-light { background: color-mix(in srgb, var(--bg) 72%, transparent); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
       .hero-ctas .btn-ghost-light:hover { background: var(--ink); }
     }
 
     .btn { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; padding: 16px 26px; transition: background .18s ease, color .18s ease, border-color .18s ease, transform .1s ease; }
     .btn:hover { transform: translateY(-2px); }
     .btn:active { transform: translateY(0); }
-    .btn-accent { background: var(--accent); color: #f6f4ee; }
+    .btn-accent { background: var(--accent); color: var(--on-accent); }
     .btn-accent:hover { background: var(--accent-dk); }
     .btn-ghost-light { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
-    .btn-ghost-light:hover { background: var(--ink); color: #f6f4ee; }
+    .btn-ghost-light:hover { background: var(--ink); color: var(--bg); }
 
     /* ── Statement band ───────────────────────────────────────────── */
     .statement {
       position: relative; overflow: hidden;
-      background: linear-gradient(118deg,#d2603a 0%,#c8553d 28%,#8a3422 60%,#15140f 100%);
+      background: var(--statement-bg);
       background-size: 200% 200%; animation: mlDrift 22s ease-in-out infinite;
     }
     .statement-wm {
@@ -127,31 +177,31 @@
       color: rgba(255,255,255,.07); pointer-events: none; user-select: none; z-index: 1;
     }
     .statement-inner { position: relative; z-index: 2; padding: clamp(52px,6.5vw,88px) clamp(16px,4vw,40px); max-width: var(--maxw); margin: 0 auto; }
-    .statement-h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(30px,6vw,58px); line-height: 1.04; letter-spacing: -.02em; color: #f7f1e6; max-width: 760px; margin-top: 18px; }
-    .btn-paper { background: var(--paper); color: var(--ink); margin-top: 30px; }
+    .statement-h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(30px,6vw,58px); line-height: 1.04; letter-spacing: -.02em; color: var(--on-panel); max-width: 760px; margin-top: 18px; }
+    .btn-paper { background: var(--on-panel); color: var(--panel); margin-top: 30px; }
     .btn-paper:hover { background: #fff; }
 
     /* ── Contact ──────────────────────────────────────────────────── */
-    .form-wrap { background: #faf7f0; border: 1px solid var(--line); padding: clamp(22px,3vw,34px); max-width: 680px; margin-top: clamp(26px,4vw,44px); }
+    .form-wrap { background: var(--surface); border: 1px solid var(--line); padding: clamp(22px,3vw,34px); max-width: 680px; margin-top: clamp(26px,4vw,44px); }
     .form-label { display: block; font-weight: 600; font-size: 12px; margin: 18px 0 7px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink); }
     .form-label:first-of-type { margin-top: 0; }
     .req { color: var(--accent); }
     .opt { color: var(--muted); text-transform: none; font-weight: 400; letter-spacing: 0; }
-    .form-input { width: 100%; background: #fff; border: 1px solid var(--line); color: var(--ink); font-size: 16px; padding: 13px; transition: outline .15s, border-color .15s; }
+    .form-input { width: 100%; background: var(--field); border: 1px solid var(--line); color: var(--ink); font-size: 16px; padding: 13px; transition: outline .15s, border-color .15s; }
     .form-input:focus { outline: 2px solid var(--accent); border-color: var(--accent); outline-offset: 0; }
     .btn-submit { width: 100%; justify-content: center; margin-top: 24px; }
     .form-note { font-size: 13px; color: var(--muted); margin-top: 14px; }
-    .thanks { display: none; background: var(--paper); border-left: 4px solid var(--accent); padding: 22px; }
+    .thanks { display: none; background: var(--surface); border-left: 4px solid var(--accent); padding: 22px; }
     .thanks.visible { display: block; }
 
     /* ── Footer ───────────────────────────────────────────────────── */
-    .site-footer { background: var(--ink); color: var(--paper); border-top: 1px solid #2b2a24; padding: clamp(44px,6vw,68px) 0; }
+    .site-footer { background: var(--panel); color: var(--on-panel); border-top: 1px solid var(--panel-line); padding: clamp(44px,6vw,68px) 0; }
     .foot-grid { display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between; align-items: flex-start; }
-    .foot-brand p { color: #b8b4a8; font-size: 15px; max-width: 320px; }
+    .foot-brand p { color: var(--on-panel-muted); font-size: 15px; max-width: 320px; }
     .foot-nav { display: flex; flex-direction: column; gap: 10px; }
-    .foot-nav a { color: var(--paper); font-weight: 600; transition: color .18s; }
+    .foot-nav a { color: var(--on-panel); font-weight: 600; transition: color .18s; }
     .foot-nav a:hover { color: var(--accent-soft); }
-    .foot-copy { color: #75726a; font-size: 13px; margin-top: 32px; }
+    .foot-copy { color: var(--on-panel-muted); font-size: 13px; margin-top: 32px; }
 
     /* ── Reveals ──────────────────────────────────────────────────── */
     [data-reveal] { transition: opacity 1s cubic-bezier(.16,1,.3,1), transform 1.15s cubic-bezier(.16,1,.3,1); }
@@ -167,7 +217,7 @@
 
     /* Services: scroll-synced list (Dirt-style dim/brighten) inside a soft
        off-white rounded card — a contained box on the cream field, not a full band */
-    .svc-card { background: #faf7f0; border: 1px solid var(--line); border-radius: 28px; padding: clamp(26px,3.4vw,54px) clamp(22px,3.2vw,50px) clamp(10px,1.4vw,20px); box-shadow: 0 1px 2px rgba(21,20,15,.03), 0 18px 40px rgba(21,20,15,.05); }
+    .svc-card { background: var(--surface); border: 1px solid var(--line); border-radius: 28px; padding: clamp(26px,3.4vw,54px) clamp(22px,3.2vw,50px) clamp(10px,1.4vw,20px); box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 18px 40px rgba(0,0,0,.16); }
     .svc-card .sec-h2 { margin-top: 0; }
     .svc2-list { margin-top: clamp(26px,3.4vw,48px); border-top: 1px solid var(--line); }
     .svc2-item { display: grid; grid-template-columns: 56px 1fr; gap: clamp(14px,3vw,40px); padding: clamp(22px,3.4vw,42px) 0; border-bottom: 1px solid var(--line); opacity: .28; transition: opacity .45s ease; }
@@ -230,6 +280,16 @@
     .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
     .lenis.lenis-stopped { overflow: clip; }
   </style>
+  <script>
+    /* Set the theme before first paint to avoid a flash. Saved choice wins; else follow the OS. */
+    (function () {
+      try {
+        var t = localStorage.getItem('mono-theme');
+        if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
 
@@ -241,6 +301,7 @@
     </div>
     <a href="#" class="nav-brand" aria-label="Monolith Media, home">Monolith</a>
     <div class="nav-group right">
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme"><span class="ti-moon" aria-hidden="true">☾</span><span class="ti-sun" aria-hidden="true">☀</span></button>
       <a href="#contact" class="pill pill-dark">Get in touch</a>
     </div>
   </header>
@@ -538,9 +599,10 @@
        so the monolith rotates *with* the scroll (page never freezes).
        Desktop loads frames/ (1600px), mobile loads frames-m/ (1080px).
        Under reduced-motion the static poster (wrap background) shows. */
-    var FRAME_COUNT = 81;  /* update this if the rotation clip's frame count changes */
-    var HERO_ZOOM   = 0.55; /* growth across the scroll (0.55 = +55%) — Kling clip had no zoom, so we add it here */
-    var HERO_PAN    = 0.10; /* leftward drift under the headline as it grows, as a fraction of canvas width */
+    var FRAME_COUNT = 120; /* update this if the rotation clip's frame count changes */
+    var HERO_ZOOM   = 0.30; /* growth across the scroll — gentler push-in so it never gets too tight */
+    var HERO_PAN    = 0.06; /* leftward drift under the headline as it grows, as a fraction of canvas width */
+    var HERO_GAIN   = 1.62;  /* desktop scroll gain: rotation + zoom get going earlier in the scroll */
     var heroWrap    = document.querySelector('.hero-art-wrap');
     var heroSticky  = document.querySelector('.hero-sticky');
     var heroMq      = window.matchMedia('(max-width: 900px)');
@@ -578,8 +640,13 @@
       heroCtx.clearRect(0, 0, cw, ch);
       heroCtx.drawImage(img, dx, dy, dw, dh);
     }
+    function heroDirNow () {
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      var base = heroMq.matches ? 'frames-m' : 'frames';
+      return dark ? base + '-dark/' : base + '/';       /* theme + breakpoint pick the frame set */
+    }
     function heroLoadFrames () {
-      var dir = heroMq.matches ? 'frames-m/' : 'frames/';
+      var dir = heroDirNow();
       if (dir === heroDir) return;                      /* right set already loaded */
       heroDir = dir;
       heroFrames = [];
@@ -603,7 +670,7 @@
       var rect = heroSticky.getBoundingClientRect();
       if (rect.bottom < 0 || rect.top > window.innerHeight) return;
       var p = -rect.top / (rect.height || window.innerHeight);
-      if (heroMq.matches) p *= 1.7;                     /* mobile: twist finishes in the first ~60% of scroll */
+      p *= heroMq.matches ? 1.7 : HERO_GAIN;             /* start rotation + zoom earlier (mobile more so) */
       p = p < 0 ? 0 : (p > 1 ? 1 : p);
       var idx = Math.floor(p * (FRAME_COUNT - 1));
       heroDraw(idx, p);                                 /* redraw every tick: zoom/pan change continuously */
@@ -649,6 +716,25 @@
           var el = document.querySelector(id); if (!el) return;
           e.preventDefault(); lenis.scrollTo(el, { offset: -72 });
         });
+      });
+    }
+
+    /* Light/dark toggle: persist the choice, swap the theme-color meta, and reload the
+       theme's hero frame set + poster (poster swaps via the --hero-poster CSS var). */
+    var themeBtn = document.getElementById('themeToggle');
+    var themeMeta = document.querySelector('meta[name="theme-color"]');
+    function applyThemeSideEffects () {
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (themeMeta) themeMeta.setAttribute('content', dark ? '#101010' : '#ece7df');
+      if (heroActive) { heroLoadFrames(); heroSizeCanvas(); heroScrollUpdate(); }
+    }
+    applyThemeSideEffects();
+    if (themeBtn) {
+      themeBtn.addEventListener('click', function () {
+        var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('mono-theme', next); } catch (e) {}
+        applyThemeSideEffects();
       });
     }
 

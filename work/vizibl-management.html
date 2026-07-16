@@ -5,29 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vizibl Management Case Study | Monolith Media Group</title>
   <meta name="description" content="How Monolith built the brand site and lead capture system for Vizibl Management, a talent &amp; management company." />
-  <meta name="theme-color" content="#e8dccc" />
+  <meta name="theme-color" content="#ece7df" />
   <link rel="icon" type="image/png" href="/monogram.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ink: #15140f; --paper: #f6f4ee; --paper2: #efece3;
-      --line: #ddd9cc; --muted: #76726a;
-      --accent: #c8553d; --accent-dk: #a8412c; --accent-soft: #e3a18f;
+      --ink: #1a1712; --paper: #f5f2ec; --paper2: #eeeae1;
+      --line: #dcd6ca; --muted: #78736a;
+      --accent: #9c6b4f; --accent-dk: #83583f; --accent-soft: #cbab96;
       --maxw: 1120px;
       --mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-text-size-adjust: 100%; }
-    body { background: #e8dccc; color: var(--ink); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body { background: #ece7df; color: var(--ink); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
     ::selection { background: var(--accent); color: var(--paper); }
     .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(16px,4vw,40px); }
 
     /* Header (same pill language as home) */
-    .site-header { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px clamp(16px,4vw,40px); background: rgba(232,220,204,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+    .site-header { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px clamp(16px,4vw,40px); background: rgba(236,231,223,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
     .nav-back { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--ink); background: #e7e2d6; padding: 9px 17px; border-radius: 8px; transition: background .18s, transform .1s; }
     .nav-back:hover { background: #ddd8ca; transform: translateY(-1px); }
     .nav-brand { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(20px,2.6vw,27px); color: var(--ink); }
@@ -59,21 +59,21 @@
     .deliv li span { font-family: var(--mono); font-size: 12px; color: var(--accent); }
 
     .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px,2vw,22px); }
-    .metric { border: 1px solid var(--line); background: #faf7f0; border-radius: 16px; padding: clamp(18px,2.4vw,28px); }
+    .metric { border: 1px solid var(--line); background: #f7f4ee; border-radius: 16px; padding: clamp(18px,2.4vw,28px); }
     .metric b { display: block; font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(30px,4.4vw,52px); line-height: 1; letter-spacing: -.02em; color: var(--accent); }
     .metric span { display: block; margin-top: 10px; font-size: 14px; color: var(--muted); }
 
     /* Testimonial: white review card, Google/iOS style */
-    .review-card { background: #faf7f0; border: 1px solid var(--line); border-radius: 20px; padding: clamp(24px,3.4vw,38px); box-shadow: 0 1px 2px rgba(21,20,15,.03), 0 20px 44px rgba(21,20,15,.08); max-width: 640px; }
+    .review-card { background: #f7f4ee; border: 1px solid var(--line); border-radius: 20px; padding: clamp(24px,3.4vw,38px); box-shadow: 0 1px 2px rgba(21,20,15,.03), 0 20px 44px rgba(21,20,15,.08); max-width: 640px; }
     .review-top { display: flex; align-items: center; gap: 14px; }
-    .review-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#15140f,#3a382f); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 18px; flex: 0 0 auto; }
+    .review-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#1a1712,#3a382f); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 18px; flex: 0 0 auto; }
     .review-who b { display: block; font-size: 15px; font-weight: 700; }
     .review-who span { display: block; font-size: 13px; color: var(--muted); margin-top: 1px; }
     .review-stars { color: #f4b400; font-size: 15px; letter-spacing: 2px; margin-top: 12px; display: block; }
     .review-quote { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(19px,2.4vw,25px); line-height: 1.35; letter-spacing: -.01em; color: var(--ink); margin-top: 10px; }
 
     /* CTA band */
-    .case-cta { background: linear-gradient(118deg,#d2603a 0%,#c8553d 40%,#8a3422 100%); color: #f7f1e6; padding: clamp(48px,8vw,96px) 0; margin-top: clamp(24px,4vw,48px); }
+    .case-cta { background: linear-gradient(118deg,#b0805c 0%,#9c6b4f 40%,#5f4230 100%); color: #f7f1e6; padding: clamp(48px,8vw,96px) 0; margin-top: clamp(24px,4vw,48px); }
     .case-cta h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(28px,5vw,52px); line-height: 1.05; letter-spacing: -.02em; max-width: 700px; }
     .btn-paper { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; padding: 16px 26px; background: var(--paper); color: var(--ink); margin-top: 28px; transition: background .18s, transform .1s; }
     .btn-paper:hover { background: #fff; transform: translateY(-2px); }
