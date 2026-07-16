@@ -19,13 +19,13 @@
       --bg: #ece7df; --surface: #f7f4ee; --field: #ffffff;
       --ink: #1a1712; --paper: #f5f2ec; --paper2: #eeeae1;
       --muted: #78736a; --line: #dcd6ca;
-      --accent: #9c6b4f; --accent-dk: #83583f; --accent-soft: #cbab96;
+      --accent: #171512; --accent-dk: #000000; --accent-soft: #6b665c;
       --on-accent: #f6f4ee;
       --panel: #1a1712; --on-panel: #f5f2ec; --on-panel-muted: #b8b4a8; --panel-line: #2b2a24;
       --cta-bg: #1a1712; --cta-text: #f5f2ec; --cta-hover: #2b2a24;
       --pill-bg: #e7e2d6; --pill-hover: #ddd8ca;
       --halo: rgba(246,244,238,.7); --halo-soft: rgba(246,244,238,.55);
-      --statement-bg: linear-gradient(118deg,#b0805c 0%,#9c6b4f 28%,#5f4230 60%,#1a1712 100%);
+      --statement-bg: linear-gradient(118deg,#3d3a33 0%,#231f19 28%,#161310 60%,#0d0b09 100%);
       --hero-poster: url('hero-monolith.webp');
       --success: #2ecc71;
       --maxw: 1120px;
@@ -262,7 +262,7 @@
     /* Pricing note (under the services list) */
     .price-line { font-family: 'Fraunces', Georgia, serif; font-size: clamp(22px,3.4vw,34px); line-height: 1.15; letter-spacing: -.01em; margin-top: 12px; }
     .price-line em { font-style: normal; color: var(--accent); }
-    .svc-price-note { margin-top: clamp(22px,3vw,36px); }
+    .svc-price-note { margin-top: clamp(28px,4vw,44px); }
 
     /* Contact: two column */
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px,4vw,64px); align-items: start; }
@@ -338,8 +338,8 @@
           <article class="svc2-item"><span class="svc2-no">02</span><div><h3 class="svc2-h">Get found on Google</h3><p class="svc2-p">Local SEO and search presence sorted, so the right people find you first.</p></div></article>
           <article class="svc2-item"><span class="svc2-no">03</span><div><h3 class="svc2-h">Be the obvious choice</h3><p class="svc2-p">Reviews, content, and brand that make you the one they trust and call first.</p></div></article>
         </div>
-        <p class="price-line svc-price-note">Websites from <em>$500</em>. Monthly plans from <em>$79</em>.</p>
       </div>
+      <p class="price-line svc-price-note" data-reveal="up">Websites from <em>$500</em>. Monthly plans from <em>$79</em>.</p>
     </div>
   </section>
 
