@@ -5,34 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vizibl Management Case Study | Monolith Media Group</title>
   <meta name="description" content="How Monolith built the brand site and lead capture system for Vizibl Management, a talent &amp; management company." />
-  <meta name="theme-color" content="#ece7df" />
+  <meta name="theme-color" content="#ece7df" id="themeMeta" />
   <link rel="icon" type="image/png" href="/monogram.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('mono-theme'); } catch (e) {}
+      if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+      if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
   <style>
     :root {
+      /* Light — Warm Greige / Bronze */
+      color-scheme: light;
+      --bg: #ece7df; --surface: #f7f4ee;
       --ink: #1a1712; --paper: #f5f2ec; --paper2: #eeeae1;
       --line: #dcd6ca; --muted: #78736a;
       --accent: #9c6b4f; --accent-dk: #83583f; --accent-soft: #cbab96;
+      --pill-bg: #e7e2d6; --pill-hover: #ddd8ca;
+      --cta-bg: #1a1712; --cta-text: #f5f2ec; --cta-hover: #2b2a24;
+      --case-cta-bg: linear-gradient(118deg,#b0805c 0%,#9c6b4f 40%,#5f4230 100%);
+      --on-panel: #f7f1e6;
       --maxw: 1120px;
       --mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     }
+    :root[data-theme="dark"] {
+      /* Dark — Black & Sand */
+      color-scheme: dark;
+      --bg: #101010; --surface: #1c1c1c;
+      --ink: #ebdfc8; --paper: #ebdfc8; --paper2: #232323;
+      --line: #2c2b28; --muted: #a6a194;
+      --accent: #a57c45; --accent-dk: #b98d52; --accent-soft: #cbab8a;
+      --pill-bg: #1c1c1c; --pill-hover: #2a2925;
+      --cta-bg: #a57c45; --cta-text: #101010; --cta-hover: #b98d52;
+      --case-cta-bg: linear-gradient(118deg,#4a3a22 0%,#2e2515 34%,#1a1712 70%,#0d0d0d 100%);
+      --on-panel: #ebdfc8;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-text-size-adjust: 100%; }
-    body { background: #ece7df; color: var(--ink); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--ink); font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; overflow-x: hidden; transition: background-color .4s ease, color .4s ease; }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
     ::selection { background: var(--accent); color: var(--paper); }
     .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 clamp(16px,4vw,40px); }
 
     /* Header (same pill language as home) */
-    .site-header { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px clamp(16px,4vw,40px); background: rgba(236,231,223,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
-    .nav-back { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--ink); background: #e7e2d6; padding: 9px 17px; border-radius: 8px; transition: background .18s, transform .1s; }
-    .nav-back:hover { background: #ddd8ca; transform: translateY(-1px); }
+    .site-header { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 15px clamp(16px,4vw,40px); background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); transition: background-color .3s; }
+    .nav-back { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; color: var(--ink); background: var(--pill-bg); padding: 9px 17px; border-radius: 8px; transition: background .18s, transform .1s; }
+    .nav-back:hover { background: var(--pill-hover); transform: translateY(-1px); }
     .nav-brand { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: clamp(20px,2.6vw,27px); color: var(--ink); }
-    .pill-dark { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; background: var(--ink); color: var(--paper); padding: 9px 17px; border-radius: 8px; transition: background .18s, transform .1s; }
-    .pill-dark:hover { background: #2b2a24; transform: translateY(-1px); }
+    .pill-dark { font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; background: var(--cta-bg); color: var(--cta-text); padding: 9px 17px; border-radius: 8px; transition: background .18s, transform .1s; }
+    .pill-dark:hover { background: var(--cta-hover); transform: translateY(-1px); }
+    .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; flex: 0 0 auto; background: var(--pill-bg); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; font-size: 15px; line-height: 1; transition: background .18s, color .18s, transform .1s; }
+    .theme-toggle:hover { background: var(--pill-hover); transform: translateY(-1px); }
+    .theme-toggle .ti-sun { display: none; }
+    .theme-toggle .ti-moon { display: inline; }
+    :root[data-theme="dark"] .theme-toggle .ti-sun { display: inline; }
+    :root[data-theme="dark"] .theme-toggle .ti-moon { display: none; }
 
     /* Simple load-in (CSS only, reduced-motion aware) */
     .rise { animation: rise .9s cubic-bezier(.16,1,.3,1) both; }
@@ -59,12 +92,12 @@
     .deliv li span { font-family: var(--mono); font-size: 12px; color: var(--accent); }
 
     .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px,2vw,22px); }
-    .metric { border: 1px solid var(--line); background: #f7f4ee; border-radius: 16px; padding: clamp(18px,2.4vw,28px); }
+    .metric { border: 1px solid var(--line); background: var(--surface); border-radius: 16px; padding: clamp(18px,2.4vw,28px); }
     .metric b { display: block; font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(30px,4.4vw,52px); line-height: 1; letter-spacing: -.02em; color: var(--accent); }
     .metric span { display: block; margin-top: 10px; font-size: 14px; color: var(--muted); }
 
     /* Testimonial: white review card, Google/iOS style */
-    .review-card { background: #f7f4ee; border: 1px solid var(--line); border-radius: 20px; padding: clamp(24px,3.4vw,38px); box-shadow: 0 1px 2px rgba(21,20,15,.03), 0 20px 44px rgba(21,20,15,.08); max-width: 640px; }
+    .review-card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: clamp(24px,3.4vw,38px); box-shadow: 0 1px 2px rgba(21,20,15,.03), 0 20px 44px rgba(21,20,15,.08); max-width: 640px; }
     .review-top { display: flex; align-items: center; gap: 14px; }
     .review-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#1a1712,#3a382f); color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 18px; flex: 0 0 auto; }
     .review-who b { display: block; font-size: 15px; font-weight: 700; }
@@ -73,7 +106,7 @@
     .review-quote { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(19px,2.4vw,25px); line-height: 1.35; letter-spacing: -.01em; color: var(--ink); margin-top: 10px; }
 
     /* CTA band */
-    .case-cta { background: linear-gradient(118deg,#b0805c 0%,#9c6b4f 40%,#5f4230 100%); color: #f7f1e6; padding: clamp(48px,8vw,96px) 0; margin-top: clamp(24px,4vw,48px); }
+    .case-cta { background: var(--case-cta-bg); color: var(--on-panel); padding: clamp(48px,8vw,96px) 0; margin-top: clamp(24px,4vw,48px); }
     .case-cta h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(28px,5vw,52px); line-height: 1.05; letter-spacing: -.02em; max-width: 700px; }
     .btn-paper { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; padding: 16px 26px; background: var(--paper); color: var(--ink); margin-top: 28px; transition: background .18s, transform .1s; }
     .btn-paper:hover { background: #fff; transform: translateY(-2px); }
@@ -123,6 +156,7 @@
   <header class="site-header">
     <a href="/index.html#work" class="nav-back">&#8592; All work</a>
     <a href="/index.html" class="nav-brand">Monolith</a>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme"><span class="ti-moon" aria-hidden="true">&#9789;</span><span class="ti-sun" aria-hidden="true">&#9728;</span></button>
     <a href="/index.html#contact" class="pill-dark">Get in touch</a>
   </header>
 
@@ -201,5 +235,20 @@
     <div class="wrap"><p class="foot-copy">&copy; 2026 Monolith Media Group. All rights reserved.</p></div>
   </footer>
 
+  <script>
+    var themeBtn = document.getElementById('themeToggle');
+    var themeMeta = document.getElementById('themeMeta');
+    function applyThemeSideEffects () {
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (themeMeta) themeMeta.setAttribute('content', dark ? '#101010' : '#ece7df');
+    }
+    applyThemeSideEffects();
+    if (themeBtn) { themeBtn.addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('mono-theme', next); } catch (e) {}
+      applyThemeSideEffects();
+    }); }
+  </script>
 </body>
 </html>

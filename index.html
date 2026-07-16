@@ -14,18 +14,18 @@
   <style>
     /* ── Tokens ───────────────────────────────────────────────────── */
     :root {
-      /* Light — Paper & Forest */
+      /* Light — Warm Greige / Bronze */
       color-scheme: light;
-      --bg: #f7f5f0; --surface: #fbfaf6; --field: #ffffff;
-      --ink: #14150f; --paper: #f5f2ea; --paper2: #ece7db;
-      --muted: #6b6a5f; --line: #ddd8c8;
-      --accent: #1f4d3a; --accent-dk: #163a2a; --accent-soft: #7fa08e;
-      --on-accent: #f5f2ea;
-      --panel: #14150f; --on-panel: #f5f2ea; --on-panel-muted: #b8b6a8; --panel-line: #2a2a22;
-      --cta-bg: #14150f; --cta-text: #f5f2ea; --cta-hover: #2a2a22;
-      --pill-bg: #ece7db; --pill-hover: #e0dbc9;
-      --halo: rgba(247,245,240,.7); --halo-soft: rgba(247,245,240,.55);
-      --statement-bg: linear-gradient(118deg,#2f6b4f 0%,#1f4d3a 28%,#163a2a 60%,#0d1912 100%);
+      --bg: #ece7df; --surface: #f7f4ee; --field: #ffffff;
+      --ink: #1a1712; --paper: #f5f2ec; --paper2: #eeeae1;
+      --muted: #78736a; --line: #dcd6ca;
+      --accent: #9c6b4f; --accent-dk: #83583f; --accent-soft: #cbab96;
+      --on-accent: #f6f4ee;
+      --panel: #1a1712; --on-panel: #f5f2ec; --on-panel-muted: #b8b4a8; --panel-line: #2b2a24;
+      --cta-bg: #1a1712; --cta-text: #f5f2ec; --cta-hover: #2b2a24;
+      --pill-bg: #e7e2d6; --pill-hover: #ddd8ca;
+      --halo: rgba(246,244,238,.7); --halo-soft: rgba(246,244,238,.55);
+      --statement-bg: linear-gradient(118deg,#b0805c 0%,#9c6b4f 28%,#5f4230 60%,#1a1712 100%);
       --hero-poster: url('hero-monolith.webp');
       --success: #2ecc71;
       --maxw: 1120px;
@@ -156,7 +156,7 @@
       .hero-ctas .btn-ghost-light:hover { background: var(--ink); }
     }
 
-    .btn { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; padding: 16px 26px; transition: background .18s ease, color .18s ease, border-color .18s ease, transform .1s ease; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 16px; padding: 16px 26px; border: 0; transition: background .18s ease, color .18s ease, border-color .18s ease, transform .1s ease; }
     .btn:hover { transform: translateY(-2px); }
     .btn:active { transform: translateY(0); }
     .btn-accent { background: var(--accent); color: var(--on-accent); }
@@ -259,11 +259,10 @@
       .tile.tile-active .tile-cta { opacity: .9; transform: none; }
     }
 
-    /* Pricing strip */
-    .pricing { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-    .pricing-row { display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: center; justify-content: space-between; padding: clamp(30px,4vw,52px) 0; }
+    /* Pricing note (under the services list) */
     .price-line { font-family: 'Fraunces', Georgia, serif; font-size: clamp(22px,3.4vw,34px); line-height: 1.15; letter-spacing: -.01em; margin-top: 12px; }
     .price-line em { font-style: normal; color: var(--accent); }
+    .svc-price-note { margin-top: clamp(22px,3vw,36px); }
 
     /* Contact: two column */
     .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px,4vw,64px); align-items: start; }
@@ -339,6 +338,7 @@
           <article class="svc2-item"><span class="svc2-no">02</span><div><h3 class="svc2-h">Get found on Google</h3><p class="svc2-p">Local SEO and search presence sorted, so the right people find you first.</p></div></article>
           <article class="svc2-item"><span class="svc2-no">03</span><div><h3 class="svc2-h">Be the obvious choice</h3><p class="svc2-p">Reviews, content, and brand that make you the one they trust and call first.</p></div></article>
         </div>
+        <p class="price-line svc-price-note">Websites from <em>$500</em>. Monthly plans from <em>$79</em>.</p>
       </div>
     </div>
   </section>
@@ -383,15 +383,6 @@
     <div class="statement-inner">
       <h2 class="statement-h2" data-reveal="up">One team for everything your business does online: found, booked, and impossible to ignore.</h2>
       <a href="#contact" class="btn btn-paper" data-reveal="up" data-reveal-delay="200">Start with a free audit &#8594;</a>
-    </div>
-  </section>
-
-  <!-- ── PRICING ────────────────────────────────────────────────── -->
-  <section class="pricing">
-    <div class="wrap pricing-row">
-      <div data-reveal="up">
-        <p class="price-line">Websites from <em>$500</em>. Monthly plans from <em>$79</em>.</p>
-      </div>
     </div>
   </section>
 
@@ -615,7 +606,11 @@
     }
     var heroActive = heroEligible();
 
-    function heroFramePath (dir, i) { var n = String(i + 1); while (n.length < 3) n = '0' + n; return dir + 'frame-' + n + '.webp'; }
+    /* /frames/* and /frames-m/* are served with a 1-year immutable Cache-Control (see
+       _headers), so any regrade that reuses the same filenames goes stale in returning
+       visitors' browsers until this bumps. Bump on every frame-content change. */
+    var HERO_ASSET_VERSION = 2;
+    function heroFramePath (dir, i) { var n = String(i + 1); while (n.length < 3) n = '0' + n; return dir + 'frame-' + n + '.webp?v=' + HERO_ASSET_VERSION; }
     function heroSizeCanvas () {
       if (!heroCanvas) return;
       var r = heroCanvas.getBoundingClientRect();
