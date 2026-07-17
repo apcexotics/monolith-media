@@ -10,3 +10,9 @@
 
 /frames-m/*
   Cache-Control: public, max-age=31536000, immutable
+
+/frames-dark/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/frames-m-dark/*
+  Cache-Control: public, max-age=31536000, immutable
