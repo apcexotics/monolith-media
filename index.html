@@ -21,7 +21,10 @@
       --muted: #78736a; --line: #dcd6ca;
       --accent: #8f9296; --accent-dk: #6b6d70; --accent-soft: #c7cacd;
       --on-accent: #14150f;
-      --silver-gradient: linear-gradient(100deg,#6b6d70 0%,#e9ebee 18%,#9a9d9f 36%,#ffffff 50%,#7c7e81 64%,#cfd2d4 82%,#6b6d70 100%);
+      --silver-gradient: linear-gradient(100deg,#84868a 0%,#c7cacd 20%,#9a9d9f 40%,#d8dadc 55%,#8f9296 72%,#b4b7ba 100%);
+      --accent-glow: drop-shadow(0 0 6px rgba(210,213,216,.3));
+      --accent-btn-glow: 0 0 10px rgba(210,213,216,.22);
+      --accent-btn-glow-hover: 0 0 14px rgba(210,213,216,.32);
       --panel: #1a1712; --on-panel: #f5f2ec; --on-panel-muted: #b8b4a8; --panel-line: #2b2a24;
       --cta-bg: #1a1712; --cta-text: #f5f2ec; --cta-hover: #2b2a24;
       --pill-bg: #e7e2d6; --pill-hover: #ddd8ca;
@@ -40,6 +43,9 @@
       --muted: #a6a194; --line: #2c2b28;
       --accent: #a57c45; --accent-dk: #b98d52; --accent-soft: #cbab8a;
       --on-accent: #14110b;
+      --accent-glow: none;
+      --accent-btn-glow: 0 0 0 rgba(0,0,0,0);
+      --accent-btn-glow-hover: 0 0 0 rgba(0,0,0,0);
       --panel: #1c1c1c; --on-panel: #ebdfc8; --on-panel-muted: #8f897b; --panel-line: #2c2b28;
       --cta-bg: #a57c45; --cta-text: #101010; --cta-hover: #b98d52;
       --pill-bg: #1c1c1c; --pill-hover: #2a2925;
@@ -92,8 +98,9 @@
     .pill:hover { background: var(--pill-hover); transform: translateY(-1px); }
     .pill-dark { background: var(--cta-bg); color: var(--cta-text); }
     .pill-dark:hover { background: var(--cta-hover); }
-    /* Light/dark toggle */
-    .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; flex: 0 0 auto; background: var(--pill-bg); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; font-size: 15px; line-height: 1; transition: background .18s, color .18s, transform .1s; }
+    /* Light/dark toggle. font-variant-emoji + the U+FE0E text-presentation selector on the
+       glyphs themselves (belt-and-suspenders) stop iOS from swapping these for color emoji. */
+    .theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; flex: 0 0 auto; background: var(--pill-bg); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; font-size: 15px; line-height: 1; font-variant-emoji: text; transition: background .18s, color .18s, transform .1s; }
     .theme-toggle:hover { background: var(--pill-hover); transform: translateY(-1px); }
     .theme-toggle .ti-sun { display: none; }
     .theme-toggle .ti-moon { display: inline; }
@@ -132,10 +139,10 @@
     .hero-h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(46px,8.4vw,104px); line-height: .96; letter-spacing: -.028em; color: var(--ink); margin-top: 22px; text-shadow: 0 1px 2px var(--halo-soft), 0 0 22px var(--halo); }
     .hero-h1 em {
       font-style: italic; color: var(--accent);
-      background: var(--silver-gradient); background-size: 220% 100%;
+      background: var(--silver-gradient); background-size: 180% 100%;
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-      text-shadow: none; filter: drop-shadow(0 0 10px rgba(210,213,216,.55));
-      animation: silverShimmer 6s ease-in-out infinite;
+      text-shadow: none; filter: var(--accent-glow);
+      animation: silverShimmer 8s ease-in-out infinite;
     }
 
     .hero-sub { font-size: clamp(16px,2vw,20px); color: var(--muted); max-width: 440px; margin-top: 24px; text-shadow: 0 1px 12px var(--halo); }
@@ -168,11 +175,11 @@
     .btn:hover { transform: translateY(-2px); }
     .btn:active { transform: translateY(0); }
     .btn-accent {
-      background: var(--silver-gradient); background-size: 220% 100%; color: var(--on-accent);
-      box-shadow: 0 0 0 1px rgba(255,255,255,.4) inset, 0 8px 24px -8px rgba(120,122,125,.5), 0 0 18px rgba(210,213,216,.35);
-      animation: silverShimmer 6s ease-in-out infinite;
+      background: var(--silver-gradient); background-size: 180% 100%; color: var(--on-accent);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.32) inset, 0 8px 24px -8px rgba(120,122,125,.5), var(--accent-btn-glow);
+      animation: silverShimmer 8s ease-in-out infinite;
     }
-    .btn-accent:hover { background-position: 100% 50%; box-shadow: 0 0 0 1px rgba(255,255,255,.55) inset, 0 10px 28px -6px rgba(120,122,125,.6), 0 0 26px rgba(210,213,216,.5); }
+    .btn-accent:hover { background-position: 100% 50%; box-shadow: 0 0 0 1px rgba(255,255,255,.42) inset, 0 10px 28px -6px rgba(120,122,125,.6), var(--accent-btn-glow-hover); }
     .btn-ghost-light { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
     .btn-ghost-light:hover { background: var(--ink); color: var(--bg); }
 
@@ -312,7 +319,7 @@
     </div>
     <a href="#" class="nav-brand" aria-label="Monolith Media, home">Monolith</a>
     <div class="nav-group right">
-      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme"><span class="ti-moon" aria-hidden="true">☾</span><span class="ti-sun" aria-hidden="true">☀</span></button>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme"><span class="ti-moon" aria-hidden="true">☾&#xFE0E;</span><span class="ti-sun" aria-hidden="true">☀&#xFE0E;</span></button>
       <a href="#contact" class="pill pill-dark">Get in touch</a>
     </div>
   </header>
