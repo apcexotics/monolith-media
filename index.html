@@ -6,7 +6,22 @@
   <title>Monolith Media Group</title>
   <meta name="description" content="Monolith builds growth infrastructure for local businesses: more inquiries, more booked appointments, and a brand that looks like the obvious premium choice online." />
   <meta name="theme-color" content="#ece7df" />
+  <link rel="canonical" href="https://monolith-media.com/" />
   <link rel="icon" type="image/png" href="monogram.png" />
+  <!-- Social share (Open Graph + Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Monolith Media Group" />
+  <meta property="og:title" content="Monolith Media Group" />
+  <meta property="og:description" content="One studio for everything your business does online: found on Google, booked, and looking like the obvious choice." />
+  <meta property="og:url" content="https://monolith-media.com/" />
+  <meta property="og:image" content="https://monolith-media.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Monolith — the online side, handled." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Monolith Media Group" />
+  <meta name="twitter:description" content="One studio for everything your business does online: found on Google, booked, and looking like the obvious choice." />
+  <meta name="twitter:image" content="https://monolith-media.com/og-image.png" />
   <link rel="preload" as="image" href="hero-monolith.webp" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,7 +36,7 @@
       --muted: #78736a; --line: #dcd6ca;
       --accent: #8f9296; --accent-dk: #6b6d70; --accent-soft: #c7cacd;
       --on-accent: #14150f;
-      --silver-gradient: linear-gradient(100deg,#84868a 0%,#c7cacd 20%,#9a9d9f 40%,#d8dadc 55%,#8f9296 72%,#b4b7ba 100%);
+      --silver-gradient: linear-gradient(100deg,#707276 0%,#aeb1b4 20%,#84878a 40%,#bfc2c4 55%,#797c80 72%,#9ca0a3 100%);
       --accent-glow: drop-shadow(0 0 6px rgba(210,213,216,.3));
       --accent-btn-glow: 0 0 10px rgba(210,213,216,.22);
       --accent-btn-glow-hover: 0 0 14px rgba(210,213,216,.32);
@@ -41,16 +56,16 @@
       --bg: #101010; --surface: #1c1c1c; --field: #191919;
       --ink: #ebdfc8; --paper: #ebdfc8; --paper2: #232323;
       --muted: #a6a194; --line: #2c2b28;
-      --accent: #a57c45; --accent-dk: #b98d52; --accent-soft: #cbab8a;
-      --on-accent: #14110b;
+      --accent: #c2c5c8; --accent-dk: #d8dadc; --accent-soft: #9a9d9f;
+      --on-accent: #14150f;
       --accent-glow: none;
       --accent-btn-glow: 0 0 0 rgba(0,0,0,0);
       --accent-btn-glow-hover: 0 0 0 rgba(0,0,0,0);
       --panel: #1c1c1c; --on-panel: #ebdfc8; --on-panel-muted: #8f897b; --panel-line: #2c2b28;
-      --cta-bg: #a57c45; --cta-text: #101010; --cta-hover: #b98d52;
+      --cta-bg: #c7cacd; --cta-text: #14150f; --cta-hover: #d8dadc;
       --pill-bg: #1c1c1c; --pill-hover: #2a2925;
       --halo: rgba(8,8,8,.55); --halo-soft: rgba(8,8,8,.45);
-      --statement-bg: linear-gradient(118deg,#4a3a22 0%,#2e2515 34%,#1a1712 70%,#0d0d0d 100%);
+      --statement-bg: linear-gradient(118deg,#3a3c3e 0%,#26282a 34%,#1a1b1c 70%,#0d0d0d 100%);
       --hero-poster: url('hero-monolith-dark.webp');
     }
     /* ── Reset ────────────────────────────────────────────────────── */
@@ -139,10 +154,10 @@
     .hero-h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(46px,8.4vw,104px); line-height: .96; letter-spacing: -.028em; color: var(--ink); margin-top: 22px; text-shadow: 0 1px 2px var(--halo-soft), 0 0 22px var(--halo); }
     .hero-h1 em {
       font-style: italic; color: var(--accent);
-      background: var(--silver-gradient); background-size: 180% 100%;
+      background: var(--silver-gradient); background-size: 140% 100%;
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
       text-shadow: none; filter: var(--accent-glow);
-      animation: silverShimmer 8s ease-in-out infinite;
+      animation: silverShimmer 24s ease-in-out infinite;
     }
 
     .hero-sub { font-size: clamp(16px,2vw,20px); color: var(--muted); max-width: 440px; margin-top: 24px; text-shadow: 0 1px 12px var(--halo); }
@@ -175,9 +190,9 @@
     .btn:hover { transform: translateY(-2px); }
     .btn:active { transform: translateY(0); }
     .btn-accent {
-      background: var(--silver-gradient); background-size: 180% 100%; color: var(--on-accent);
+      background: var(--silver-gradient); background-size: 140% 100%; color: var(--on-accent);
       box-shadow: 0 0 0 1px rgba(255,255,255,.32) inset, 0 8px 24px -8px rgba(120,122,125,.5), var(--accent-btn-glow);
-      animation: silverShimmer 8s ease-in-out infinite;
+      animation: silverShimmer 24s ease-in-out infinite;
     }
     .btn-accent:hover { background-position: 100% 50%; box-shadow: 0 0 0 1px rgba(255,255,255,.42) inset, 0 10px 28px -6px rgba(120,122,125,.6), var(--accent-btn-glow-hover); }
     .btn-ghost-light { background: transparent; color: var(--ink); border: 1.5px solid var(--ink); }
@@ -319,7 +334,7 @@
     </div>
     <a href="#" class="nav-brand" aria-label="Monolith Media, home">Monolith</a>
     <div class="nav-group right">
-      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme"><span class="ti-moon" aria-hidden="true">☾&#xFE0E;</span><span class="ti-sun" aria-hidden="true">☀&#xFE0E;</span></button>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark theme" aria-pressed="false" title="Toggle theme"><span class="ti-moon" aria-hidden="true">☾&#xFE0E;</span><span class="ti-sun" aria-hidden="true">☀&#xFE0E;</span></button>
       <a href="#contact" class="pill pill-dark">Get in touch</a>
     </div>
   </header>
@@ -626,7 +641,7 @@
     /* /frames/* and /frames-m/* are served with a 1-year immutable Cache-Control (see
        _headers), so any regrade that reuses the same filenames goes stale in returning
        visitors' browsers until this bumps. Bump on every frame-content change. */
-    var HERO_ASSET_VERSION = 2;
+    var HERO_ASSET_VERSION = 3;
     function heroFramePath (dir, i) { var n = String(i + 1); while (n.length < 3) n = '0' + n; return dir + 'frame-' + n + '.webp?v=' + HERO_ASSET_VERSION; }
     function heroSizeCanvas () {
       if (!heroCanvas) return;
@@ -738,6 +753,7 @@
     function applyThemeSideEffects () {
       var dark = document.documentElement.getAttribute('data-theme') === 'dark';
       if (themeMeta) themeMeta.setAttribute('content', dark ? '#101010' : '#ece7df');
+      if (themeBtn) themeBtn.setAttribute('aria-pressed', String(dark));
       if (heroActive) { heroLoadFrames(); heroSizeCanvas(); heroScrollUpdate(); }
     }
     applyThemeSideEffects();

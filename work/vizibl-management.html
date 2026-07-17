@@ -6,7 +6,22 @@
   <title>Vizibl Management Case Study | Monolith Media Group</title>
   <meta name="description" content="How Monolith built the brand site and lead capture system for Vizibl Management, a talent &amp; management company." />
   <meta name="theme-color" content="#ece7df" id="themeMeta" />
+  <link rel="canonical" href="https://monolith-media.com/work/vizibl-management.html" />
   <link rel="icon" type="image/png" href="/monogram.png" />
+  <!-- Social share (Open Graph + Twitter) -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Monolith Media Group" />
+  <meta property="og:title" content="Vizibl Management — Case Study | Monolith Media Group" />
+  <meta property="og:description" content="Brand site and lead capture for a talent venture, built to look established from day one." />
+  <meta property="og:url" content="https://monolith-media.com/work/vizibl-management.html" />
+  <meta property="og:image" content="https://monolith-media.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Monolith — the online side, handled." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Vizibl Management — Case Study | Monolith Media Group" />
+  <meta name="twitter:description" content="Brand site and lead capture for a talent venture, built to look established from day one." />
+  <meta name="twitter:image" content="https://monolith-media.com/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -26,7 +41,7 @@
       --ink: #1a1712; --paper: #f5f2ec; --paper2: #eeeae1;
       --line: #dcd6ca; --muted: #78736a;
       --accent: #8f9296; --accent-dk: #6b6d70; --accent-soft: #c7cacd;
-      --silver-gradient: linear-gradient(100deg,#84868a 0%,#c7cacd 20%,#9a9d9f 40%,#d8dadc 55%,#8f9296 72%,#b4b7ba 100%);
+      --silver-gradient: linear-gradient(100deg,#707276 0%,#aeb1b4 20%,#84878a 40%,#bfc2c4 55%,#797c80 72%,#9ca0a3 100%);
       --accent-glow: drop-shadow(0 0 6px rgba(210,213,216,.3));
       --pill-bg: #e7e2d6; --pill-hover: #ddd8ca;
       --cta-bg: #1a1712; --cta-text: #f5f2ec; --cta-hover: #2b2a24;
@@ -41,11 +56,11 @@
       --bg: #101010; --surface: #1c1c1c;
       --ink: #ebdfc8; --paper: #ebdfc8; --paper2: #232323;
       --line: #2c2b28; --muted: #a6a194;
-      --accent: #a57c45; --accent-dk: #b98d52; --accent-soft: #cbab8a;
+      --accent: #c2c5c8; --accent-dk: #d8dadc; --accent-soft: #9a9d9f;
       --accent-glow: none;
       --pill-bg: #1c1c1c; --pill-hover: #2a2925;
-      --cta-bg: #a57c45; --cta-text: #101010; --cta-hover: #b98d52;
-      --case-cta-bg: linear-gradient(118deg,#4a3a22 0%,#2e2515 34%,#1a1712 70%,#0d0d0d 100%);
+      --cta-bg: #c7cacd; --cta-text: #14150f; --cta-hover: #d8dadc;
+      --case-cta-bg: linear-gradient(118deg,#3a3c3e 0%,#26282a 34%,#1a1b1c 70%,#0d0d0d 100%);
       --on-panel: #ebdfc8;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -84,14 +99,12 @@
     .case-h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 500; font-size: clamp(42px,8vw,96px); line-height: .98; letter-spacing: -.028em; margin-top: 16px; }
     .case-h1 em {
       font-style: italic; color: var(--accent);
-      background: var(--silver-gradient); background-size: 180% 100%;
+      background: var(--silver-gradient); background-size: 140% 100%;
       -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
       filter: var(--accent-glow);
-      animation: silverShimmer 8s ease-in-out infinite;
+      animation: silverShimmer 24s ease-in-out infinite;
     }
     .case-sub { font-size: clamp(16px,2vw,20px); color: var(--muted); max-width: 560px; margin-top: 20px; }
-    .case-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
-    .tag { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--ink); padding: 8px 14px; border-radius: 999px; }
 
     .case-section { padding: clamp(34px,5.6vw,64px) 0; border-top: 1px solid var(--line); }
     .case-grid { display: grid; grid-template-columns: 220px 1fr; gap: clamp(20px,4vw,56px); }
@@ -166,7 +179,7 @@
   <header class="site-header">
     <a href="/index.html#work" class="nav-back">&#8592; All work</a>
     <a href="/index.html" class="nav-brand">Monolith</a>
-    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark theme" title="Toggle theme"><span class="ti-moon" aria-hidden="true">&#9789;&#xFE0E;</span><span class="ti-sun" aria-hidden="true">&#9728;&#xFE0E;</span></button>
+    <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark theme" aria-pressed="false" title="Toggle theme"><span class="ti-moon" aria-hidden="true">&#9789;&#xFE0E;</span><span class="ti-sun" aria-hidden="true">&#9728;&#xFE0E;</span></button>
     <a href="/index.html#contact" class="pill-dark">Get in touch</a>
   </header>
 
@@ -251,6 +264,7 @@
     function applyThemeSideEffects () {
       var dark = document.documentElement.getAttribute('data-theme') === 'dark';
       if (themeMeta) themeMeta.setAttribute('content', dark ? '#101010' : '#ece7df');
+      if (themeBtn) themeBtn.setAttribute('aria-pressed', String(dark));
     }
     applyThemeSideEffects();
     if (themeBtn) { themeBtn.addEventListener('click', function () {
