@@ -653,7 +653,7 @@
     /* /frames/* and /frames-m/* are served with a 1-year immutable Cache-Control (see
        _headers), so any regrade that reuses the same filenames goes stale in returning
        visitors' browsers until this bumps. Bump on every frame-content change. */
-    var HERO_ASSET_VERSION = 3;
+    var HERO_ASSET_VERSION = 4;
     function heroFramePath (dir, i) { var n = String(i + 1); while (n.length < 3) n = '0' + n; return dir + 'frame-' + n + '.webp?v=' + HERO_ASSET_VERSION; }
     function heroSizeCanvas () {
       if (!heroCanvas) return;
